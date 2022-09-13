@@ -137,7 +137,12 @@ Pour installer le projet en local. Vous devez avoir un [environnement de dévelo
     ```
     git clone https://github.com/sebastienmariette74/body-and-mind.git 
     ```
-* Créer une copie du .env en le nommant .env.local et modifier le fichier .env.local afin de le rendre compatible avec votre environement.
+* Créer une copie du .env en le nommant .env.local et modifier le fichier .env.local afin de le rendre compatible avec votre environement. Y intégrer votre propre variable d'environnement ```DATABASE_URL``` ainsi que
+    ```
+    JWT_SECRET='la83ll3vi3'
+    MAILER_DSN=smtp://5cf86cc32fabf3:8c20466cbd703a@smtp.mailtrap.io:2525?encryption=tls&auth_mode=login
+
+    ```
 
 * Installer les dépendances php
     ```
@@ -149,8 +154,14 @@ Pour installer le projet en local. Vous devez avoir un [environnement de dévelo
     ```
 * Exécuter les migrations sur la base de données
     ```
+    php bin/console doctrine:database:create
+    php bin/console make:migration
     php bin/console doctrine:migrations:migrate
     ```
+* Créer en base de donnée un user avec le rôle ````ROLE_ADMIN````
+Ex : INSERT INTO `user` (`partner_id`, `email`, `roles`, `password`, `name`, `address`, `zipcode`, `city`, `is_activated`, `is_verified`, `created_at`, `slug`, `reset_token`) VALUES (NULL, 'admin@bodyandmind.fr', '[\"ROLE_ADMIN\"]', '$2y$13$A22vpGhbS9g85s/jbOgzA.RttX2GGxFeyjbgV4JokWJ2eGDL1dXgi', 'admin', NULL, NULL, NULL, 1, 0, '2022-08-22 07:53:23', 'admin', 1);
+
+
 * Compiler le javascript
     ```
     npm run dev
@@ -159,6 +170,10 @@ Pour installer le projet en local. Vous devez avoir un [environnement de dévelo
     ```
     symfony server:start
     ```
+* S'identifier :
+
+    * email : ````admin@bodyandmind.fr````
+    * mot de passe : ````admin````
 
 # Questions et réflexions
 
