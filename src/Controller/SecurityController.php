@@ -74,7 +74,7 @@ class SecurityController extends AbstractController
                     $context
                 );
 
-                $this->addFlash('success', 'Email envoyé avec succès');
+                $this->addFlash('success', 'Email envoyé avec succès.');
                 return $this->redirectToRoute('app_login');
 
 

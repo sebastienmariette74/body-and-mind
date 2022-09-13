@@ -1,0 +1,63 @@
+
+.card {
+  box-shadow: 0 0 10px 1px grey;
+  z-index: 1;
+  min-height: 150px;
+  min-width: 300px;
+  max-width: 350px;
+}
+
+.card-body {
+  text-align: center;
+}
+
+.card-title a {
+  padding: 20px 0px;
+}
+
+.form-switch {
+  display: block;
+  padding: 0 40px;
+}
+
+
+.modal-switch-user {
+  z-index: 2;
+}
+
+.form-check-input {
+  margin: 0 auto !important;
+  padding: 0;
+}
+
+.form-check {
+  display: inline-block;
+}
+
+.card-module {
+  box-shadow: 0 0 10px 1px grey;
+  border-radius: 20px;
+  margin: 16px auto;
+  width: 300px;
+}
+
+.label-module {
+  text-align: left;
+  height: 40px;
+  line-height: 40px;
+}
+
+.form-switch-module {
+  height: 40px;
+}
+
+.style-module {
+  top: 50%;
+  transform: translateY(50%);
+}
+
+@media screen and (min-width: 578px) {
+  .card-module {
+    width: 350px;
+  }
+}
