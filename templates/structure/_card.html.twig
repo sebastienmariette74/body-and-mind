@@ -29,8 +29,7 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <a class="btn btn-warning" href="{{ path('structures_edit', {slug : structure.slug}) }}">Modifier</a>
 
-                <button type="button" class="btn btn-danger modal-trigger" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop" data-name="{{ structure.name }}"
+                <button type="button" class="btn btn-danger modal-trigger" data-name="{{ structure.name }}"
                         data-slug="{{ structure.slug }}"
                         data-id="{{ structure.id }}">
                     Supprimer

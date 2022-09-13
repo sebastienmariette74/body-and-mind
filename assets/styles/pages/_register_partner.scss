@@ -1,0 +1,49 @@
+#registration_isActivated {
+  width: 26px;
+  height: 26px;
+}
+
+form[name=registration] .checkbox-inline {
+  padding-left: 10px;
+}
+
+form[name=registration] .form-label {
+  margin-bottom: 0;
+}
+
+form[name=registration] input {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+
+.register-module {
+  width: 400px;
+  margin: 0 auto;
+}
+
+#btn-check-module {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.btn .btn-primary .btn-register {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#registration_partner {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 578px) {
+  form[name=registration] input, #btn-check-module, #registration_partner {
+    width: 400px;
+    margin: 0 auto;
+  }
+
+}
+
