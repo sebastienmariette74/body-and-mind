@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un partenaire{% endblock %}
+
+{% block PageTitle %}<h1 class="my-3">Modifier le partenaire : {{ partner.name }}</h1>{% endblock %}
+
+{% block body %}
+    <div>
+        {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.address) }}
+        {{ form_row(form.zipcode) }}
+        {{ form_row(form.city) }}
+        {# {{ form_row(form.isActivated) }} #}
+        {{ form_row(form.slug) }}
+        <button type="submit" class="btn btn-primary mt-3">Modifier</button>
+        {{ form_end(form) }}
+    </div>
+
+
+{% endblock %}

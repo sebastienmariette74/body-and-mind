@@ -1,0 +1,32 @@
+<h2 class="py-3 fw-bold m-0">Droits</h2>
+<hr class="mt-0 mb-2">
+<div class="row">
+
+    {% for module in modules %}
+
+    {% set modulePartner = '' %}
+
+    {% set continue = true %}
+
+    {% for item in modulesPartner %}
+        {% if continue == true %}
+            {% if item.module_id == module.id_module %}    
+                {% set modulePartner = item.activated %}
+                {% set continue = false %}
+            {% endif %}    
+        {% endif %}
+    {% endfor %}
+    
+    {% set checked = module.is_activated ? 'checked' : '' %}
+
+    <div class="form-check form-switch form-switch-module">
+        <input class="form-check-input activate-module style-module btn-lg col-2" type="checkbox" role="switch" {{
+            checked }} data-role="{{ role }}" data-idmodule="{{ module.id_module }}" data-name="{{ module.module }}"
+            data-slug="{{ structure.slug }}"
+             data-modulepartner="{{ modulePartner }}"
+             >
+        <label class="col-9 label-module ps-2">{{ module.module }}</label>
+    </div>
+
+    {% endfor %}
+</div>

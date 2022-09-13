@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des droits{% endblock %}
+
+{% block PageTitle %}<h1 class="my-3">Liste des droits</h1>{% endblock %}
+
+{% block body %}
+    <a href="{{ path('modules_add') }}" class="btn btn-success add-user mx-3">Ajouter un droit</a>
+
+    <div id="content" class="row justify-content-center">
+
+        {% for module in modules %}
+            <div class="card col-3 mb-3 m-3" style="width: 18rem;">
+                {# <img src="..." class="card-img-top" alt="..."> #}
+                <div class="card-body d-flex flex-column justify-content-between">
+
+                    <h5 class="card-title fw-bold">
+                        {{ module.name }}
+                    </h5>
+
+                    <div>
+                        <a class="btn btn-warning" href="{{ path('modules_edit', {'id' : module.id} ) }}">Modifier</a>
+
+                        <button
+                                type="button"
+                                class="btn btn-danger modal-trigger ms-2"
+                                data-name="{{ module.name }}"
+                                data-slug="{{ module.slug }}"
+                                data-id="{{ module.id }}"
+                        >
+                            Supprimer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+
+    {% include "_partials/_modal_delete.html.twig" %}
+
+{% endblock %}

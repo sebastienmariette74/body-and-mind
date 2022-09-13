@@ -1,0 +1,25 @@
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.address) }}
+    {{ form_row(form.zipcode) }}
+    {{ form_row(form.city) }}
+    {{ form_row(form.isActivated) }}
+    {{ form_row(form.plainPassword, {
+        label: 'Mot de passe'
+    }) }}
+<div class="row register-module">
+    {% for module in modules %}
+        <div class="form-check form-switch">
+
+            <input class="form-check-input check-module btn-lg col-1 style-module" name="{{ module.slug }}"
+                   value="{{ module.id }}"
+                   type="checkbox" role="switch" checked>
+            <label class="form-check-label col-9 label-module" for="flexSwitchCheckChecked">{{ module.name }}</label>
+        </div>
+    {% endfor %}
+</div>
+
+
+<button id="btn-check-module" type="submit" class="btn btn-primary btn-register mt-3 ">Enregistrer</button>
+{{ form_end(form) }}

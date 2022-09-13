@@ -1,0 +1,50 @@
+<h1>Changement du statut de votre compte</h1>
+{# <p>Bonjour {{ structure.name is defined ? structure.name : user.name }},</p> #}
+<p>Bonjour {{ type == 'structure' ? structure.name : partner.name }},</p>
+
+
+<p>
+    {% if type == "partner" %}   
+
+    {% if not partner.isActivated %}
+    Nous vous informons de la désactivation de votre compte ainsi que celui de toutes vos salles de sport. <br>
+    Nous les avons également informées par mail de ce changement.
+    {% endif %}
+
+    {% if structure is defined and not structure.isActivated %}
+    Nous vous informons de la désactivation du compte de la salles de sport : <strong>{{ structure.name }}</strong><br>
+    Nous les avons également informées par mail de ce changement.
+    {% endif %}
+    
+    {% if structure is defined and structure.isActivated %}
+    Nous avons le plaisir de vous informer de l'activation de la salle de sport : <strong>{{ structure.name }}</strong>
+    {% endif %}
+
+    {% if partner.isActivated and not structure is defined %}
+    Nous avons le plaisir de vous informer de l'activation de votre compte. <br>
+    Bienvenue parmi nous.
+    {% endif %}
+
+    {% endif %}
+
+    {% if type == "structure" %}   
+    {% if structure is defined and structure.isActivated %}
+    Nous avons le plaisir de vous informer de l'activation de votre compte. <br>
+    Bienvenue parmi nous.
+    {% endif %}
+
+    {% if not partner.isActivated %}
+    Nous vous informons de la désactivation de votre compte suite à la désactivation du compte de votre centrale.
+    {% endif %}
+
+    {% if structure is defined and not structure.isActivated and partner.isActivated %}
+    Nous vous informons de la désactivation de votre compte. <br>
+    Votre centrale en a été informée par mail.
+    {% endif %}
+
+    {% endif %}
+
+</p>
+
+<p>Sportivement,</p>
+<p>La Team Body &amp; Mind.</p>

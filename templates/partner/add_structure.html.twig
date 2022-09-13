@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Enregistrement d'une structure pour : {{ partner.name }}{% endblock %}
+
+{% block PageTitle %}<h1 class="my-3">Enregistrement d'une structure pour <br> {{ partner.name }}</h1>{% endblock %}
+
+{% block body %}
+
+    <div class="m-3">
+
+        {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.address) }}
+        {{ form_row(form.zipcode) }}
+        {{ form_row(form.city) }}
+        {{ form_row(form.plainPassword, {
+            label: 'Mot de passe'
+        }) }}
+
+        <button id="btn-check-module" type="submit" class="btn btn-primary mt-2 w-100">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

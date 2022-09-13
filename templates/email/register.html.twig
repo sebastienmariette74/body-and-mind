@@ -1,0 +1,36 @@
+<h1>Activation de votre compte</h1>
+<p>Bonjour
+
+    {% if structure.name is defined %}
+    {{ structure.name}}
+    {% else %}
+    {% if partner.name is defined %}
+    {{ partner.name }}
+    {% endif %}
+    {% endif %}
+</p>
+
+<p>
+    Votre inscription sur le site "Body &amp; Mind" est à valider en cliquant sur le lien ci -dessous : <br><br>
+    <a href="{{ absolute_url(path('verify_user', {token : token})) }}">{{ absolute_url(path('verify_user', {token :
+        token})) }}</a>
+</p>
+<p>Attention, ce lien expirera dans 3 heures.</p>
+
+<p><strong>Lors de votre première connexion, après avoir cliqué sur le lien ci-dessus :</strong> 
+<ul>
+    <li>cliquez sur le bouton <strong>Réinitialiser votre mot de passe</strong></li>
+    <li>Votre adresse mail est :
+        {% if structure.email is defined %}
+        <strong>{{ structure.email}}</strong>
+        {% else %}
+        {% if partner.email is defined %}
+        <strong>{{ partner.email }}</strong>
+        {% endif %}
+        {% endif %}
+    </li>
+</ul>
+</p>
+
+<p>Sportivement,</p>
+<p>La Team Body &amp; Mind.</p>
