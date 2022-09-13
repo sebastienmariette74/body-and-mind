@@ -100,53 +100,69 @@ npm run build
 symfony serve -d
 ```
 
-Avant chaque utilisation de l'application, vous devez
+Cette application comprend l'envoi de mails. Pour pouvoir les visualiser, vous pouvez vous rendre sur [mailtrap](https://mailtrap.io/inboxes/1886536/messages).
 
-- lancer le proramme suivant :
-  [mailHog](https://github.com/mailhog/MailHog/releases/tag/v1.0.1)
-- ouvrir le ```localhost:1025```
+```
+- login : bodyandmindfrance@gmail.com
+- mot de passe : bodyandmind
+```
 
-Cela vous permettra d'accéder à une bôite mail factice pour tester l'application.
 
 ## Déploiement sur Heroku
 
 Afin de déployer le projet sur Heroku. Il est important d'avoir créer un compte sur celui-ci.
 
 * Créer une nouvelle aplication avec la cli
-    * ````heroku create````
+    ```
+    heroku create (nom de l'appli)
+    ```
 * Configurer les variables d'environnement
-    * ```heroku config:set APP_ENV=prod```
+    ```
+    heroku config:set APP_ENV=prod
+    ```
 * Lancer le déploiement
-    * ```git push heroku main```
+    ```
+    git push heroku main
+    ```
+
+Pour garantir un déploiement sur Heroku réussi, je vous conseille de passer par le bunddle [nat/deploy](https://packagist.org/packages/nat/deploy). Suivez-les étapes décrites sur le site.
 
 ## Installation en local
 
-Pour installer le projet en local. Vous devez avoir un environement de développement correctement configuré.
+Pour installer le projet en local. Vous devez avoir un [environnement de développement](https://symfony.com/doc/current/setup.html) correctement configuré.
 
-[Mettre en place un environement de développement](https://symfony.com/doc/current/setup.html)
+### Etapes
 
-Une fois cela fait :
+* Créer votre dossier de travail et cloner le projet.
+    ```
+    git clone https://github.com/sebastienmariette74/body-and-mind.git 
+    ```
+* Créer une copie du .env en le nommant .env.local et modifier le fichier .env.local afin de le rendre compatible avec votre environement.
 
-* Cloner le projet
-    * ````git clone https://github.com/trouvainGregoire/studi-ecf-bank.git````
-* Créer une copie du .env en le nommant .env.local
-    * ````cp .env .env.local````
-* Modifier le fichier .env.local afin de le rendre compatible avec votre environement
 * Installer les dépendances php
-    * ````composer install````
+    ```
+    composer install
+    ```
 * Installer les dépendances javascript
-    * ````npm install````
+    ```
+    npm install
+    ```
 * Exécuter les migrations sur la base de données
-    * ```php bin/console doctrine:migrations:migrate```
+    ```
+    php bin/console doctrine:migrations:migrate
+    ```
 * Compiler le javascript
-    * ````npm run dev````
+    ```
+    npm run dev
+    ```
 * Lancer le projet
-    * ````symfony server:start````
+    ```
+    symfony server:start
+    ```
 
 # Questions et réflexions
 
 Le document questions et réflexions ce trouve dans le dossier ```annexes```.
 
 Vous pouvez également cliquer sur
-ce [lien](https://github.com/trouvainGregoire/studi-ecf-bank/blob/master/pdf/Questions%20et%20R%C3%A9ponses%20-%20ECF%20Banque.pdf)
-.
+ce [lien](https://github.com/sebastienmariette74/body-and-mind/blob/main/annexes/questions%20et%20reflexions.pdf) pour le voir.
