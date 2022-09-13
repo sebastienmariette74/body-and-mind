@@ -1,0 +1,51 @@
+{% block flash %}{% include "_partials/_flash.html.twig" %}{% endblock %}
+
+{% for structure in structures %}
+    <div class="card col-3 m-3" style="width: 18rem;">
+        {# <img src="..." class="card-img-top" alt="..."> #}
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title">
+                <a href="{{ path('structures_details', {slug: structure.slug}) }}">
+                    {{ structure.name }}
+                </a>
+            </h5>
+            {# <button class="btn btn-primary" id="btn-test2">TEST</button> #}
+            <p class="card-text">
+                {{ structure.address }} <br>
+                {{ structure.zipcode }}
+                {{ structure.city }}
+            </p>
+
+            {% set state = structure.partner is null ? 'partner' : 'structure' %}
+
+            {% set disabled = not partner.isActivated ? 'disabled' : '' %}
+
+            {% set checked = structure.isActivated ? 'checked' : '' %}
+
+            <div class="form-check form-switch d-flex mb-3">
+                <input class="form-check-input modal-switch-user btn-lg" type="checkbox" role="switch" {{ checked }}
+                       data-name="{{ structure.name is defined ? structure.name : partner.name }}"
+                       data-role="{{ role }}"
+                       data-id="{{ structure.id }}" data-slug="{{ structure.slug }}" data-state="{{ state }}"
+                       data-disabled="{{ disabled }}">
+            </div>
+
+            <div>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="btn btn-warning"
+                       href="{{ path('structures_edit', {slug : structure.slug}) }}">Modifier</a>
+
+                    <button type="button" class="btn btn-danger modal-trigger" data-name="{{ structure.name }}"
+                            data-slug="{{ structure.slug }}"
+                            data-id="{{ structure.id }}">
+                        Supprimer
+                    </button>
+                    <br>
+
+                {% endif %}
+            </div>
+
+
+        </div>
+    </div>
+{% endfor %}

@@ -1,0 +1,45 @@
+{% if is_granted('ROLE_ADMIN') %}
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <a class="nav-link" href="/">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Accueil
+                    </a>
+                    <a class="nav-link" href="{{ path('partners_') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Partenaires
+                    </a>
+                    <a class="nav-link" href="{{ path('structures_') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Structures
+                    </a>
+                    <a class="nav-link" href="{{ path('modules_') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Droits
+                    </a>
+                    <a class="nav-dead-link collapsed" href="#" data-bs-toggle="collapse"
+                       data-bs-target="#collapseLayouts"
+                       aria-expanded="false" aria-controls="collapseLayouts">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Enregistrement
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="{{ path('app_register_partner') }}">Partenaire</a>
+                            <a class="nav-link" href="{{ path('app_register_structure') }}">Structure</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="sb-sidenav-footer">
+                <div class="small">Logged in as:</div>
+                {{ app.user.userIdentifier }}
+            </div>
+        </nav>
+    </div>
+{% endif %}
+

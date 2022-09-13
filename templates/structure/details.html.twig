@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ structure.name }}{% endblock %}
+
+{# {% block breadcrumb %}
+    {% if is_granted('ROLE_PARTNER') %}
+        {% include "_partials/_breadcrumb.html.twig" %}
+    {% endif %}
+{% endblock %} #}
+
+
+{% block PageTitle %}<h1 class="my-3">{{ structure.name }}</h1>{% endblock %}
+
+{% block body %}
+
+    {% if not app.user.isActivated %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="alert-message">
+                <strong>Votre compte est actuellement désactivé.</strong>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if (app.user.isVerified and app.user.isActivated) or is_granted('ROLE_ADMIN') %}
+
+
+        <div id="content" class="row justify-content-center content">
+
+            {% include "structure/_card.html.twig" %}
+        </div>
+        <hr class=" mt-2 mb-4">
+        <div id="modules" class="card-module pb-2 modules" style="width: 18rem;">
+            {% include "structure/_modules.html.twig" %}
+
+
+        </div>
+        {% include "_partials/_modal_module.html.twig" %}
+        {% include "_partials/_modal_switch.html.twig" %}
+        {% include "_partials/_modal_delete.html.twig" %}
+    {% endif %}
+{% endblock %}

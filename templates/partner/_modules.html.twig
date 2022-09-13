@@ -1,0 +1,16 @@
+<h2 class="py-3 fw-bold m-0">Permissions globales</h2>
+<hr class="mt-0 mb-2">
+<div class="row">
+    {% for module in modules %}
+
+    {% set checked = module.is_activated ? 'checked' : '' %}
+
+    <div class="form-check form-switch form-switch-module">
+        <input class="form-check-input activate-module style-module btn-lg col-2" type="checkbox" role="switch" {{
+            checked }} data-role="{{ role }}" data-idmodule="{{ module.id_module }}" data-name="{{ module.module }}"
+            data-slug="{{ partner.slug }}">
+
+        <label class="col-9 label-module">{{ module.module }}</label>
+    </div>
+    {% endfor %}
+</div>

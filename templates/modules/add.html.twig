@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un droit{% endblock %}
+
+{% block PageTitle %}<h1 class="my-3">Ajouter un droit</h1>{% endblock %}
+
+{% block body %}
+
+        {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        <button type="submit" class="btn btn-primary mt-3">Ajouter</button>
+        {{ form_end(form) }}
+
+{% endblock %}   

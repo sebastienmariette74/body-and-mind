@@ -1,0 +1,22 @@
+<h1>Activation du compte de la salle de sport : {{ structure.name}}</h1>
+<p>Bonjour
+
+    {% if partner.name is defined %}
+    {{ partner.name }}
+    {% else %}
+    {% if structure.name is defined %}
+    {{ structure.name}}
+    {% endif %}
+    {% endif %}
+</p>
+
+<p>
+    Nous vous informons de l'activation du compte de la salle de sport : {{ structure.name}}
+</p>
+<p>
+    Vous pouvez dès à présent accéder aux informations de cette salle en suivant le lien ci-dessous :
+    <a href="{{ url|raw }}">{{ url|raw }}</a>
+</p>
+
+<p>Sportivement,</p>
+<p>La Team Body &amp; Mind.</p>
