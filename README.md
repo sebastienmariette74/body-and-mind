@@ -91,15 +91,6 @@ Vous pouvez vérifier les pré-requis avec la commande suivante (de la CLI Symfo
 symfony check:requirements
 ```
 
-### Lancer l'environnement de développement
-
-```bash
-composer install
-npm install
-npm run build
-symfony serve -d
-```
-
 Cette application comprend l'envoi de mails. Pour pouvoir les visualiser, vous pouvez vous rendre sur [mailtrap](https://mailtrap.io/inboxes/1886536/messages).
 
 ```
@@ -107,25 +98,6 @@ Cette application comprend l'envoi de mails. Pour pouvoir les visualiser, vous p
 - mot de passe : bodyandmind
 ```
 
-
-## Déploiement sur Heroku
-
-Afin de déployer le projet sur Heroku. Il est important d'avoir créer un compte sur celui-ci.
-
-* Créer une nouvelle aplication avec la cli
-    ```
-    heroku create (nom de l'appli)
-    ```
-* Configurer les variables d'environnement
-    ```
-    heroku config:set APP_ENV=prod
-    ```
-* Lancer le déploiement
-    ```
-    git push heroku main
-    ```
-
-Pour garantir un déploiement sur Heroku réussi, je vous conseille de passer par le bunddle [nat/deploy](https://packagist.org/packages/nat/deploy). Suivez-les étapes décrites sur le site.
 
 ## Installation en local
 
@@ -164,7 +136,7 @@ Ex : INSERT INTO `user` (`partner_id`, `email`, `roles`, `password`, `name`, `ad
 
 * Compiler le javascript
     ```
-    npm run dev
+    npm run build
     ```
 * Lancer le projet
     ```
@@ -174,6 +146,26 @@ Ex : INSERT INTO `user` (`partner_id`, `email`, `roles`, `password`, `name`, `ad
 
     * email : ````admin@bodyandmind.fr````
     * mot de passe : ````admin````
+
+
+## Déploiement sur Heroku
+
+Afin de déployer le projet sur Heroku. Il est important d'avoir créer un compte sur celui-ci.
+
+* Créer une nouvelle aplication avec la cli
+    ```
+    heroku create (nom de l'appli)
+    ```
+* Configurer les variables d'environnement
+    ```
+    heroku config:set APP_ENV=prod
+    ```
+* Lancer le déploiement
+    ```
+    git push heroku main
+    ```
+
+Pour garantir un déploiement sur Heroku réussi, je vous conseille de passer par le bunddle [nat/deploy](https://packagist.org/packages/nat/deploy). Suivez-les étapes décrites sur le site.
 
 # Questions et réflexions
 
