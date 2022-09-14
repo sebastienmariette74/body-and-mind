@@ -29,7 +29,6 @@ class RegisterPartnerController extends AbstractController
         Request $request, 
         UserPasswordHasherInterface $userPasswordHasher, 
         UserAuthenticatorInterface $userAuthenticator, 
-        // SecurityUserAuthenticator $authenticator, 
         EntityManagerInterface $entityManager, 
         SluggerInterface $slugger, 
         SendMailService $mail, 
@@ -80,20 +79,15 @@ class RegisterPartnerController extends AbstractController
             }
             $entityManager->flush();
 
-            // On génère le JWT de l'utilisateur
-            // On crée le Header
             $header = [
                 'typ' => 'JWT',
                 'alg' => 'HS256'
             ];
-
-            // On crée le Payload
             $payload = [
                 'user_id' => $partner->getId()
             ];
-
-            // On génère le token
             $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
+
             $mail->send(
                 'noreply@bodyandmind.fr',
                 $partner->getEmail(),
@@ -113,17 +107,13 @@ class RegisterPartnerController extends AbstractController
     #[Route('/verif/{token}', name: 'verify_user')]
     public function verifyUser($token, JWTService $jwt, UserRepository $userRepository, EntityManagerInterface $em): Response
     {
-        // dd($token);
-        //On vérifie si le token est valide, n'a pas expiré et n'a pas été modifié
+
         if($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))){
-            // On récupère le payload
+            
             $payload = $jwt->getPayload($token);
-
-            // On récupère le user du token
+            
             $user = $userRepository->find($payload['user_id']);
-
-            //On vérifie que l'utilisateur existe et n'a pas encore activé son compte
-            // if($user && !$user->isVerified() && $this->isGranted('ROLE_ADMIN')){
+            
             if($user && !$user->isVerified()){
                 $user->setIsVerified(true);
                 $em->flush($user);
@@ -133,11 +123,10 @@ class RegisterPartnerController extends AbstractController
         }
         if ($user->isVerified()){
             $this->addFlash('danger', 'Le compte est déjà activé');
-        } else {
-            // Ici un problème se  pose dans le token
+        } else {            
             $this->addFlash('danger', 'Le token est invalide ou a expiré');
         }
-        // return $this->redirectToRoute('app_login');
+
         return $this->redirectToRoute("structures_details", ['slug' => $user->getSlug()]);
     }
 
@@ -156,22 +145,15 @@ class RegisterPartnerController extends AbstractController
             return $this->redirectToRoute("structures_details", ['slug' => $user->getSlug()]);    
         }
 
-        // On génère le JWT de l'utilisateur
-        // On crée le Header
         $header = [
             'typ' => 'JWT',
             'alg' => 'HS256'
         ];
-
-        // On crée le Payload
         $payload = [
             'user_id' => $user->getId()
         ];
-
-        // On génère le token
         $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
-
-        // On envoie un mail
+        
         $mail->send(
             'no-reply@monsite.net',
             $user->getEmail(),

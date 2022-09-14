@@ -43,7 +43,6 @@ class ModuleController extends AbstractController
     #[Route('/{id}/modifications', name: 'edit')]
     public function edit(Module $module, Request $request, SluggerInterface $slugger): Response
     {
-        // $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $form = $this->createForm(ModuleType::class, $module);
         $form->remove('slug');
@@ -63,8 +62,7 @@ class ModuleController extends AbstractController
     #[Route('/ajouter-un-module', name: 'add')]
     public function add(Request $request, SluggerInterface $slugger, UserRepository $userRepo): Response
     {
-        // $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
+        
         $module = new Module();
 
         $form = $this->createForm(ModuleType::class, $module);

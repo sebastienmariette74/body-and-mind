@@ -38,7 +38,6 @@ class PartnerController extends AbstractController
         }
     }
 
-
     #[Route('/', name: '')]
     public function index(Request $request, PaginationService $pagination, UserRepository $userRepo): Response
     {
@@ -90,11 +89,10 @@ class PartnerController extends AbstractController
             } else {
                 $role = "";
             }
-            // return new Response('true');
+            
             return $this->render('partner/_content.html.twig', compact('partners', 'role', 'total', 'limit', 'page'));
         }
     }
-
 
     #[Route('/{slug}', name: 'details')]
     public function show(User $partner, UserInterface $user, Request $request): Response
@@ -141,10 +139,8 @@ class PartnerController extends AbstractController
                     $type = "structure";
                     $partner = $user;
                     $mail->send(
-                        'sebastien.mariette.74@gmail.com',
-                        // 'noreply@bodyandmind.fr',
-                        'dev@example.com',
-                        // $structure->getEmail(),
+                        'noreply@bodyandmind.fr',
+                        $structure->getEmail(),
                         'Changement du statut de votre compte sur le site Body & Mind',
                         'info_state_partner',
                         compact('structure', 'partner', 'type')
@@ -169,10 +165,8 @@ class PartnerController extends AbstractController
             $partner = $user;
 
             $mail->send(
-                'sebastien.mariette.74@gmail.com',
-                // 'noreply@bodyandmind.fr',
-                'dev@example.com',
-                // $user->getEmail(),
+                'noreply@bodyandmind.fr',
+                $user->getEmail(),
                 'Changement du statut de votre compte sur le site Body & Mind',
                 'info_state_partner',
                 compact('partner', 'type')
@@ -212,7 +206,6 @@ class PartnerController extends AbstractController
 
             $type = 'structure';
 
-
             $structure = $user;
             $partner = $user->getPartner();
             $mail->send(
@@ -243,12 +236,8 @@ class PartnerController extends AbstractController
     public function activateModule(Module $module, string $slug, string $id, User $user): Response
     {
         $partner = $this->userRepository->findUserBySlug($slug);
-        // dd($partner->getId());
         $module = $this->userModuleRepository->findModule($slug, $id);
         $structures = $this->userRepository->findAllStructuresByPartner($partner->getId());
-     
-
-        // $module->setIsActivated(($module->isIsActivated()) ? false : true);
         
             if ($module->isIsActivated()) {
                 $module->setIsActivated(false);
@@ -263,7 +252,6 @@ class PartnerController extends AbstractController
         $this->em->persist($module);
         $this->em->flush();
 
-        // return new Response('true');
         if ($this->isGranted('ROLE_ADMIN')) {
             $role = "admin";
         } else {
@@ -271,10 +259,8 @@ class PartnerController extends AbstractController
         }
         
         $modules = $this->userModuleRepository->findModulesByUser($partner->getId());
-        // dd($modules);
 
-        return $this->render("partner/_modules.html.twig", compact('partner', 'role', 'structures', 'modules'));
-        // return new Response ("true");
+        return $this->render("partner/_modules.html.twig", compact('partner', 'role', 'structures', 'modules'));        
     }
 
     #[Route('/{slug}/ajouter-une-structure', name: 'add_structure')]
@@ -289,6 +275,7 @@ class PartnerController extends AbstractController
         SendMailService $mail,
         UserModuleRepository $userModuleRepository
     ): Response {
+
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $structure = new User();
@@ -328,19 +315,13 @@ class PartnerController extends AbstractController
             }
             $entityManager->flush();
 
-            // On génère le JWT de l'utilisateur
-            // On crée le Header
             $header = [
                 'typ' => 'JWT',
                 'alg' => 'HS256'
             ];
-
-            // On crée le Payload
             $payload = [
                 'user_id' => $structure->getId()
             ];
-
-            // On génère le token
             $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
             $mail->send(
@@ -412,16 +393,13 @@ class PartnerController extends AbstractController
     #[Route('/verif/{token}', name: 'verify_user')]
     public function verifyUser($token, JWTService $jwt, UserRepository $userRepository, EntityManagerInterface $em): Response
     {
-        dd($token);
-        //On vérifie si le token est valide, n'a pas expiré et n'a pas été modifié
+        
         if ($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))) {
-            // On récupère le payload
+
             $payload = $jwt->getPayload($token);
-
-            // On récupère le user du token
+            
             $user = $userRepository->find($payload['user_id']);
-
-            //On vérifie que l'utilisateur existe et n'a pas encore activé son compte
+            
             if ($user && !$user->isVerified()) {
                 $user->setIsVerified(true);
                 $em->flush($user);
@@ -429,8 +407,9 @@ class PartnerController extends AbstractController
                 return $this->redirectToRoute("structures_details", ['slug' => $user->getSlug()]);
             }
         }
-        // Ici un problème se pose dans le token
+        
         $this->addFlash('danger', 'Le token est invalide ou a expiré');
+
         return $this->redirectToRoute('app_login');
     }
 
@@ -449,22 +428,16 @@ class PartnerController extends AbstractController
             return $this->redirectToRoute("structures_details", ['slug' => $user->getSlug()]);
         }
 
-        // On génère le JWT de l'utilisateur
-        // On crée le Header
+        
         $header = [
             'typ' => 'JWT',
             'alg' => 'HS256'
-        ];
-
-        // On crée le Payload
+        ];        
         $payload = [
             'user_id' => $user->getId()
         ];
-
-        // On génère le token
         $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
-
-        // On envoie un mail
+        
         $mail->send(
             'no-reply@monsite.net',
             $user->getEmail(),
@@ -481,68 +454,4 @@ class PartnerController extends AbstractController
         };
     }
 
-    // #[Route('/all', name: 'all')]
-    // public function all(): Response
-    // {
-    //     $partners = $this->userRepository->findAllByRole("ROLE_PARTNER");
-
-    //     if ($this->isGranted('ROLE_ADMIN')) {
-    //         $role = "admin";
-    //     } else {
-    //         $role = "";
-    //     }
-
-    //     return $this->render('partner/_content.html.twig', compact('partners', 'role'));
-    // }
-
-    // #[Route('/actives', name: 'activated')]
-    // public function activated(PaginationService $pagination, Request $request, UserRepository $userRepo): Response
-    // {
-
-    //     $paginate = $pagination->pagination($request, $userRepo, 9, "getPaginatedAllActivatedByRole", "ROLE_PARTNER", "getTotalActivatedByRole");
-    //     // dd($paginate);
-    //     $partners = $paginate['partners'];
-    //     $total = $paginate['total'];
-    //     $limit = $paginate['limit'];
-    //     $page = $paginate['page'];
-
-    //     // $partners = $this->userRepository->findAllPartnersActivated();
-
-    //     if ($this->isGranted('ROLE_ADMIN')) {
-    //         $role = "admin";
-    //     } else {
-    //         $role = "";
-    //     }
-
-    //     return $this->render('partner/_content.html.twig', compact('partners', 'role', 'total', 'limit', 'page'));
-    // }
-
-    // #[Route('/desactives', name: 'disabled')]
-    // public function diasble(): Response
-    // {
-
-    //     $partners = $this->userRepository->findAllPartnersDisabled();
-
-    //     if ($this->isGranted('ROLE_ADMIN')) {
-    //         $role = "admin";
-    //     } else {
-    //         $role = "";
-    //     }
-    //     // return new Response ('<html><body>true</body></html>');
-    //     return $this->render('partner/_content.html.twig', compact('partners', 'role'));
-    // }
-
-    // #[Route('/all/{query}', name: 'query')]
-    // public function query(string $query): Response
-    // {
-    //     $partners = $this->userRepository->findPartnersByQuery($query);
-
-    //     if ($this->isGranted('ROLE_ADMIN')) {
-    //         $role = "admin";
-    //     } else {
-    //         $role = "";
-    //     }
-
-    //     return $this->render('partner/_content.html.twig', compact('partners', 'role'));
-    // }
 }

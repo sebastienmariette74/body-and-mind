@@ -3,12 +3,6 @@ import { async } from "../functions/async.js";
 
 // ____________________ MODAL SUPPRESSION D'UN PARTENAIRE/STRUCTURE ____________________//
 
-window.onclick = function (event) {
-  if (event.target == $("#modal-delete")) {
-    $("#modal-delete").css("display", "none");
-  }
-};
-
 $(".modal_trigger").on("click", function (e) {
   console.log("ok");
   $("#modal-delete").css("display", "block");

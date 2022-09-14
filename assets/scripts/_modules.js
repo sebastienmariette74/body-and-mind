@@ -1,12 +1,6 @@
 const axios = require("axios").default;
 import { async } from "../functions/async.js";
 
-window.onclick = function (event) {
-  if (event.target == $("#modal-module")) {
-    $("#modal-module").css("display", "none");
-  }
-};
-
 /* _____________ ACTIVATION/DESACTIVATION DE MODULE ____________________________*/
 
 $(".activate-module").css("cursor", "pointer");
@@ -76,9 +70,11 @@ $("#modules").on("click", ".activate-module", function (e) {
         );
         $("#btn-module").css("display", "none");
         $("#btn-module-cancel").text("VALIDER");
-        $("#btn-module-cancel").css("backgroundColor", "#0d6efd");
-        $("#btn-module-cancel").css("border", "none");
-        $("#btn-module-cancel").css("outline", "none");
+        $("#btn-module-cancel").css({
+          "backgroundColor": "#0d6efd",
+          "border": "none",
+          "outline": "none"
+        });
 
       } else {
 

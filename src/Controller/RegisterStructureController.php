@@ -8,7 +8,6 @@ use App\Form\RegistrationType;
 use App\Repository\ModuleRepository;
 use App\Repository\UserModuleRepository;
 use App\Repository\UserRepository;
-use App\Security\UserAuthenticator;
 use App\Service\JWTService;
 use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -106,7 +105,6 @@ class RegisterStructureController extends AbstractController
             $this->addFlash('success', 'Emails envoyés avec succès');
 
             return $this->redirectToRoute('structures_');
-
         }
 
         return $this->renderForm('register_structure/index.html.twig', compact('form'));

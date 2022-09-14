@@ -2,12 +2,11 @@
 
 {% block title %}{{ structure.name }}{% endblock %}
 
-{# {% block breadcrumb %}
-    {% if is_granted('ROLE_PARTNER') %}
+{% block breadcrumb %}
+    {% if not is_granted('ROLE_STRUCTURE') and not is_granted('ROLE_ADMIN') %}
         {% include "_partials/_breadcrumb.html.twig" %}
     {% endif %}
-{% endblock %} #}
-
+{% endblock %}
 
 {% block PageTitle %}<h1 class="my-3">{{ structure.name }}</h1>{% endblock %}
 
@@ -32,9 +31,8 @@
         <hr class=" mt-2 mb-4">
         <div id="modules" class="card-module pb-2 modules" style="width: 18rem;">
             {% include "structure/_modules.html.twig" %}
-
-
         </div>
+        
         {% include "_partials/_modal_module.html.twig" %}
         {% include "_partials/_modal_switch.html.twig" %}
         {% include "_partials/_modal_delete.html.twig" %}

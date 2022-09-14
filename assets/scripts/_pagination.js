@@ -9,13 +9,3 @@ $("#content").on("click", ".page-link", function (e) {
     async(url.pathname + params + "&ajax=1", "content");
 });
 
-
-/*
-$('.card').css("cursor", "pointer");
-
-$("#content").on("click", '.card', function (e) {
-    console.log($('a', this).attr('href'));
-    let href = $('a', this).attr('href');
-    window.location.href = href;
-})
- */

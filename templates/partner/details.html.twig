@@ -8,12 +8,6 @@
 
 {% block PageTitle %}<h1 class="my-3">{{ partner.name }}</h1>{% endblock %}
 
-{# {% block breadcrumb %}
-    {% if is_granted('ROLE_ADMIN') %}
-        {% include "_partials/_breadcrumb.html.twig" %}
-    {% endif %}
-{% endblock %} #}
-
 {% block body %}
     {% if not app.user.isActivated %}
         <div class="alert alert-warning alert-dismissible" role="alert">
@@ -45,11 +39,9 @@
             {% include "partner/_modules.html.twig" %}
         
         </div>
-
         
     {% endif %}
-    
-    {% include "_partials/_modal_module.html.twig" %}
 
+    {% include "_partials/_modal_module.html.twig" %}
 
 {% endblock %}

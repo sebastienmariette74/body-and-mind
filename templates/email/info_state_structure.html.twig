@@ -1,23 +1,40 @@
-<h1>Changement du statut de votre compte</h1>
-<p>Bonjour {{ type == 'structure' ? structure.name : partner.name }},</p>
+<!DOCTYPE html>
+<html lang="fr">
 
-<p>
-    {% if structure is defined and not structure.isActivated and type == "partner" %}
-    Nous vous informons de la désactivation du compte de la salle de sport : <strong>{{ structure.name }}</strong><br>
-    Nous les avons également informées par mail de ce changement.
-    {% endif %}
-    {% if structure is defined and not structure.isActivated and type == "structure" %}
-    Nous vous informons de la désactivation de votre compte. <br>
-    Votre centrale en a été informée par mail.
-    {% endif %}
-    {% if structure is defined and structure.isActivated and type == "structure" %}
-    Nous avons le plaisir de vous informer de l'activation de votre compte. <br>
-    Bienvenue parmi nous.
-    {% endif %}
-    {% if structure is defined and structure.isActivated and type == "partner" %}
-    Nous avons le plaisir de vous informer de l'activation du compte de la salle de sport : <strong>{{ structure.name }}</strong>
-    {% endif %}
-</p>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changement du statut de votre compte</title>
+</head>
 
-<p>Sportivement,</p>
-<p>La Team Body &amp; Mind.</p>
+<body>
+    <h1>Changement du statut de votre compte</h1>
+    <p>Bonjour {{ type == 'structure' ? structure.name : partner.name }},</p>
+
+    <p>
+        {% if structure is defined and not structure.isActivated and type == "partner" %}
+        Nous vous informons de la désactivation du compte de la salle de sport : <strong>{{ structure.name
+            }}</strong><br>
+        Nous les avons également informées par mail de ce changement.
+        {% endif %}
+        {% if structure is defined and not structure.isActivated and type == "structure" %}
+        Nous vous informons de la désactivation de votre compte. <br>
+        Votre centrale en a été informée par mail.
+        {% endif %}
+        {% if structure is defined and structure.isActivated and type == "structure" %}
+        Nous avons le plaisir de vous informer de l'activation de votre compte. <br>
+        Bienvenue parmi nous.
+        {% endif %}
+        {% if structure is defined and structure.isActivated and type == "partner" %}
+        Nous avons le plaisir de vous informer de l'activation du compte de la salle de sport : <strong>{{
+            structure.name }}</strong>
+        {% endif %}
+    </p>
+
+    <p>Sportivement,</p>
+    <p>La Team Body &amp; Mind.</p>
+
+</body>
+
+</html>

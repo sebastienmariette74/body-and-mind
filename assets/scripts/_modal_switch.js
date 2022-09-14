@@ -3,17 +3,9 @@ import { async } from "../functions/async.js";
 
 // ____________________ MODAL ACTIVATION D'UN PARTENAIRE/STRUCTURE ____________________//
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-  if (event.target == $("#modal-switch")) {
-    $("#modal-switch").css("display", "none");
-  }
-};
-
 $(".modal-switch-user").css("cursor", "pointer");
 
 let slug = "";
-let state = "";
 let name = "";
 
 $("#cards").on("click", ".modal-switch-user", function (e) {
@@ -24,14 +16,17 @@ $("#cards").on("click", ".modal-switch-user", function (e) {
     e.preventDefault();
     if ($(this).data("disabled") === "disabled") {
       $("#modal-switch").css("display", "block");
+      $(".modal-body-switch .question").css("display", "none");
       $(".modal-body-switch .para1").text(
         `La salle ne peut pas être activée quand le partenaire est désactivé.`
       );
       $("#btn-switch").css("display", "none");
       $("#btn-switch-cancel").text("VALIDER");
-      $("#btn-switch-cancel").css("backgroundColor", "#0d6efd");
-      $("#btn-switch-cancel").css("border", "none");
-      $("#btn-switch-cancel").css("outline", "none");
+      $("#btn-switch-cancel").css({
+        "backgroundColor": "#0d6efd",
+        "border": "none",
+        "outline": "none"
+      });
     }
   } else {
     e.preventDefault();
@@ -60,7 +55,6 @@ $("#cards").on("click", ".modal-switch-user", function (e) {
 
     $("#modal-switch").css("display", "block");
     slug = $(this).data("slug");
-    state = $(this).data("state");
   }
 });
 
@@ -72,14 +66,17 @@ $("#content").on("click", ".modal-switch-user", function (e) {
         e.preventDefault();
         if ($(this).data("disabled") === "disabled") {
         $("#modal-switch").css("display", "block");
+        $(".modal-body-switch .question").css("display", "none");
         $(".modal-body-switch .para1").text(
             `La salle ne peut pas être activée quand le partenaire est désactivé.`
         );
         $("#btn-switch").css("display", "none");
         $("#btn-switch-cancel").text("VALIDER");
-        $("#btn-switch-cancel").css("backgroundColor", "#0d6efd");
-        $("#btn-switch-cancel").css("border", "none");
-        $("#btn-switch-cancel").css("outline", "none");
+        $("#btn-switch-cancel").css({
+          "backgroundColor": "#0d6efd",
+          "border": "none",
+          "outline": "none"
+        });
         }
     } else {
         e.preventDefault();
@@ -106,7 +103,6 @@ $("#content").on("click", ".modal-switch-user", function (e) {
         }
         $("#modal-switch").css("display", "block");
         slug = $(this).data("slug");
-        state = $(this).data("state");
     }
 
 });

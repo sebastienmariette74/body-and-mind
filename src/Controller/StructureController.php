@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Module;
 use App\Entity\User;
-use App\Form\RegisterStructureType;
 use App\Form\RegistrationType;
 use App\Repository\UserModuleRepository;
 use App\Repository\UserRepository;
@@ -20,9 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[Route('/structures', name: 'structures_')]
 class StructureController extends AbstractController
 {
-    public function __construct(private UserRepository $userRepo, private UserModuleRepository $userModuleRepository, private EntityManagerInterface $em)
-    {
-    }
+    public function __construct(private UserRepository $userRepo, private UserModuleRepository $userModuleRepository, private EntityManagerInterface $em){}
 
     #[Route('/', name: '')]
     public function index(Request $request, PaginationService $pagination): Response
@@ -59,89 +56,16 @@ class StructureController extends AbstractController
             } else {
                 $role = "";
             }
-            // return new Response('true');
+            
             return $this->render('structure/_content.html.twig', compact('structures', 'role', 'total', 'limit', 'page'));
         }
-
-        // $structures = $this->userRepository->findAllByRole("ROLE_STRUCTURE");
-        // // dd($structures);
-
-        // if ($this->isGranted('ROLE_ADMIN')) {
-        //     $role = "admin";
-        // } else {
-        //     $role = "";
-        // }
-
-        // if ($request->isXmlHttpRequest()) {
-        //     return new JsonResponse([
-        //         "content" => $this->renderView("structure/_content.html.twig", compact('structures', 'role'))
-        //     ]);
-        // }
-
-        // return $this->render('structure/index.html.twig', compact('structures', 'role'));
     }
-
-    // #[Route('/all', name: 'all')]
-    // public function all(): Response
-    // {
-    //     $structures = $this->userRepository->findAllByRole("ROLE_STRUCTURE");
-
-    //     if ($this->isGranted('ROLE_ADMIN')) {
-    //         $role = "admin";
-    //     } else {
-    //         $role = "";
-    //     }
-
-    //     return $this->render('structure/_content.html.twig', compact('structures', 'role'));
-    // }
-
-    // #[Route('/actives', name: 'activated')]
-    // public function activated(): Response
-    // {
-    //     $structures = $this->userRepository->findAllStructuresActivated();
-
-    //     if ($this->isGranted('ROLE_ADMIN')) {
-    //         $role = "admin";
-    //     } else {
-    //         $role = "";
-    //     }
-
-    //     return $this->render('structure/_content.html.twig', compact('structures', 'role'));
-    // }
-
-    // #[Route('/desactives', name: 'disabled')]
-    // public function diasble(): Response
-    // {
-    //     $structures = $this->userRepository->findAllStructuresDisabled();
-
-    //     if ($this->isGranted('ROLE_ADMIN')) {
-    //         $role = "admin";
-    //     } else {
-    //         $role = "";
-    //     }
-
-    //     return $this->render('structure/_content.html.twig', compact('structures', 'role'));
-    // }
-
-    // #[Route('/all/{query}', name: 'query')]
-    // public function query(string $query): Response
-    // {
-    //     $structures = $this->userRepository->findStructuresByQuery($query);
-
-    //     if ($this->isGranted('ROLE_ADMIN')) {
-    //         $role = "admin";
-    //     } else {
-    //         $role = "";
-    //     }
-
-    //     return $this->render('structure/_content.html.twig', compact('structures', 'role'));
-    // }
 
     #[Route('/{slug}', name: 'details')]
     public function show(User $structure, UserInterface $user): Response
     {
 
-        if ($user->getUserIdentifier() === $structure->getEmail() || $user === $structure->getPartner() || $this->isGranted('ROLE_PARTNER')) {
+        if ($user->getUserIdentifier() === $structure->getEmail() || $user === $structure->getPartner() || $this->isGranted('ROLE_ADMIN')) {
             $structureId = $structure->getId();
             $modules = $this->userModuleRepository->findModulesByUser($structureId);
 
@@ -153,7 +77,6 @@ class StructureController extends AbstractController
             $partner = $structure->getPartner();
 
             $modulesPartner = $this->userModuleRepository->findModulesByPartner($structure->getPartner());
-            // dd($modulesPartner);
 
             return $this->render('structure/details.html.twig', compact('structure', 'role', 'modules', 'partner', 'modulesPartner'));
         } else {
@@ -205,24 +128,7 @@ class StructureController extends AbstractController
     public function activateUser(User $structure, Request $request, SendMailService $mail, PaginationService $pagination): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
-        // dd(parse_url($_SERVER[]));
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
-            $url = "https";
-        else
-            $url = "http";
-
-        // Ajoutez // à l'URL.
-        $url .= "://";
-
-        // Ajoutez l'hôte (nom de domaine, ip) à l'URL.
-        $url .= $_SERVER['HTTP_HOST'];
-
-        // Ajouter l'emplacement de la ressource demandée à l'URL
-        $url .= $_SERVER['REQUEST_URI'];
-
-        // $structures = $this->userRepository->findAllByRole("ROLE_STRUCTURE");
-
+        
         $structure->setIsActivated(($structure->isIsActivated()) ? false : true);
         $this->em->persist($structure);
         $this->em->flush();
