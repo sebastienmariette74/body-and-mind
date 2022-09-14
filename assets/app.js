@@ -27,5 +27,3 @@ import './scripts/_pagination';
 //
 // Scripts
 //
-
-console.log('min');
