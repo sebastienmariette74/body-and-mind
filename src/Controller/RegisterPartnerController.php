@@ -42,7 +42,6 @@ class RegisterPartnerController extends AbstractController
         $form->remove('partner');
         $form->handleRequest($request);
         $modules = $moduleRepository->findAll();
-        // dd($modules);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $modules = $moduleRepository->findAll();
