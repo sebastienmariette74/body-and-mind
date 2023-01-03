@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class PaginationService extends ServiceEntityRepository
 {
-    public function __construct(private RequestStack $request){}
+    // public function __construct(private RequestStack $request){}
 
     public function pagination(
         Request $request,
