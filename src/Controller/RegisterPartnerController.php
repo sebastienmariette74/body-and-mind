@@ -28,7 +28,7 @@ class RegisterPartnerController extends AbstractController
     public function index(
         Request $request, 
         UserPasswordHasherInterface $userPasswordHasher, 
-        // UserAuthenticatorInterface $userAuthenticator, 
+        UserAuthenticatorInterface $userAuthenticator, 
         // EntityManagerInterface $entityManager, 
         // SluggerInterface $slugger, 
         // SendMailService $mail, 
