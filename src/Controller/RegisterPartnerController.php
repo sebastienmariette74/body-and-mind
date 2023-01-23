@@ -101,7 +101,7 @@ class RegisterPartnerController extends AbstractController
 
         // }
         // return $this->renderForm('register_partner/index.html.twig', compact('form', 'modules'));        
-        return $this->render('app_home');        
+        return $this->render('home/index.html.twig');
     }
 
     #[Route('/verif/{token}', name: 'verify_user')]
