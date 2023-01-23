@@ -27,7 +27,7 @@ class RegisterPartnerController extends AbstractController
     #[Route('/enregistrement/partenaire', name: 'app_register_partner')]
     public function index(
         Request $request, 
-        // UserPasswordHasherInterface $userPasswordHasher, 
+        UserPasswordHasherInterface $userPasswordHasher, 
         // UserAuthenticatorInterface $userAuthenticator, 
         // EntityManagerInterface $entityManager, 
         // SluggerInterface $slugger, 
