@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security\UserAuthenticator as SecurityUserAuthenticator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -90,13 +91,13 @@ class RegisterPartnerController extends AbstractController
             ];
             $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
-            // $mail->send(
-            //     'noreply@bodyandmind.fr',
-            //     $partner->getEmail(),
-            //     'Activation de votre compte sur le site Body & Mind',
-            //     'register',
-            //     compact('partner', 'token')
-            // );
+            $mail->send(
+                'noreply@bodyandmind.fr',
+                $partner->getEmail(),
+                'Activation de votre compte sur le site Body & Mind',
+                'register',
+                compact('partner', 'token')
+            );
 
             $this->addFlash('success', 'Email envoyé avec succès');
 

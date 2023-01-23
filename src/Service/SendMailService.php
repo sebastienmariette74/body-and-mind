@@ -7,10 +7,12 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class SendMailService 
 {
-    // public function __construct( MailerInterface $mailer ){}
+    public MailerInterface $mailer ;
+    public function __construct( MailerInterface $mailer ){
+        $this->$mailer = $mailer;
+    }
 
     public function send (
-        MailerInterface $mailer,
         string $from,
         string $to,
         string $subject,
@@ -18,6 +20,7 @@ class SendMailService
         array $context
     ): void
     {
+
         $email = (new TemplatedEmail())
                     ->from($from)
                     ->to($to)
@@ -25,7 +28,7 @@ class SendMailService
                     ->htmlTemplate("email/$template.html.twig")
                     ->context($context);
 
-        $mailer->send($email);
+        $this->mailer->send($email);
     }
 }
 
