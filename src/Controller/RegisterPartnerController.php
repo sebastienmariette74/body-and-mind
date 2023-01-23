@@ -36,71 +36,72 @@ class RegisterPartnerController extends AbstractController
         ModuleRepository $moduleRepository
     ): Response
     {               
-        $partner = new User();
-        $form = $this->createForm(RegistrationType::class, $partner);
-        $form->remove('slug');
-        $form->remove('partner');
-        $form->handleRequest($request);
-        $modules = $moduleRepository->findAll();
+        // $partner = new User();
+        // $form = $this->createForm(RegistrationType::class, $partner);
+        // $form->remove('slug');
+        // $form->remove('partner');
+        // $form->handleRequest($request);
+        // $modules = $moduleRepository->findAll();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $modules = $moduleRepository->findAll();
-            $tableUserModule = [];
-            foreach($modules as $module){
-                if(isset($_POST[$module->getSlug()])){
-                    $userModule = new UserModule();
-                    $userModule->setIsActivated(true);
-                    $userModule->setUser($partner);
-                    $userModule->setModule($module);
-                    $tableUserModule[] = $userModule;
-                } else {
-                    $userModule = new UserModule();
-                    $userModule->setIsActivated(false);
-                    $userModule->setUser($partner);
-                    $userModule->setModule($module);
-                    $tableUserModule[] = $userModule;
-                }                
-            }
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $modules = $moduleRepository->findAll();
+        //     $tableUserModule = [];
+        //     foreach($modules as $module){
+        //         if(isset($_POST[$module->getSlug()])){
+        //             $userModule = new UserModule();
+        //             $userModule->setIsActivated(true);
+        //             $userModule->setUser($partner);
+        //             $userModule->setModule($module);
+        //             $tableUserModule[] = $userModule;
+        //         } else {
+        //             $userModule = new UserModule();
+        //             $userModule->setIsActivated(false);
+        //             $userModule->setUser($partner);
+        //             $userModule->setModule($module);
+        //             $tableUserModule[] = $userModule;
+        //         }                
+        //     }
 
-            $partner->setRoles(['ROLE_PARTNER']);
-            $partner->setSlug($slugger->slug($partner->getName())->lower());
-            // encode the plain password
-            $partner->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $partner,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+        //     $partner->setRoles(['ROLE_PARTNER']);
+        //     $partner->setSlug($slugger->slug($partner->getName())->lower());
+        //     // encode the plain password
+        //     $partner->setPassword(
+        //         $userPasswordHasher->hashPassword(
+        //             $partner,
+        //             $form->get('plainPassword')->getData()
+        //         )
+        //     );
 
-            $entityManager->persist($partner);
-            foreach($tableUserModule as $userModule){
-                $entityManager->persist($userModule);
-            }
-            $entityManager->flush();
+        //     $entityManager->persist($partner);
+        //     foreach($tableUserModule as $userModule){
+        //         $entityManager->persist($userModule);
+        //     }
+        //     $entityManager->flush();
 
-            $header = [
-                'typ' => 'JWT',
-                'alg' => 'HS256'
-            ];
-            $payload = [
-                'user_id' => $partner->getId()
-            ];
-            $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
+        //     $header = [
+        //         'typ' => 'JWT',
+        //         'alg' => 'HS256'
+        //     ];
+        //     $payload = [
+        //         'user_id' => $partner->getId()
+        //     ];
+        //     $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
-            $mail->send(
-                'noreply@bodyandmind.fr',
-                $partner->getEmail(),
-                'Activation de votre compte sur le site Body & Mind',
-                'register',
-                compact('partner', 'token')
-            );
+        //     $mail->send(
+        //         'noreply@bodyandmind.fr',
+        //         $partner->getEmail(),
+        //         'Activation de votre compte sur le site Body & Mind',
+        //         'register',
+        //         compact('partner', 'token')
+        //     );
 
-            $this->addFlash('success', 'Email envoyé avec succès');
+        //     $this->addFlash('success', 'Email envoyé avec succès');
 
-            return $this->redirectToRoute("partners_");
+        //     return $this->redirectToRoute("partners_");
 
-        }
-        return $this->renderForm('register_partner/index.html.twig', compact('form', 'modules'));        
+        // }
+        // return $this->renderForm('register_partner/index.html.twig', compact('form', 'modules'));        
+        return $this->render('app_home');        
     }
 
     #[Route('/verif/{token}', name: 'verify_user')]
