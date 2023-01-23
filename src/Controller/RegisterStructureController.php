@@ -90,7 +90,7 @@ class RegisterStructureController extends AbstractController
             );
 
             $structureName = $structure->getName();
-            $subject = `Activation du compte de la salle de sport : ${structureName}`;
+            $subject = `Activation du compte de la salle de sport : $structureName}`;
             $slug = $structure->getSlug();
             $url = $this->generateUrl('structures_details', ['slug' => $slug], UrlGeneratorInterface::ABSOLUTE_URL);
 
