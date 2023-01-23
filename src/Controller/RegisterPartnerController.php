@@ -30,7 +30,7 @@ class RegisterPartnerController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher, 
         UserAuthenticatorInterface $userAuthenticator, 
         EntityManagerInterface $entityManager, 
-        // SluggerInterface $slugger, 
+        SluggerInterface $slugger, 
         // SendMailService $mail, 
         // JWTService $jwt,
         // ModuleRepository $moduleRepository
