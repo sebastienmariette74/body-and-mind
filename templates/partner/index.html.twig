@@ -2,32 +2,32 @@
 
 {% block title %}Les partenaires{% endblock %}
 
+
 {% block PageTitle %}<h1 class="my-3">Les partenaires</h1>{% endblock %}
 
 {% block body %}
-    <div>
+<div>
 
-        <form id="filters" class="mb-2">
-            <div class="d-flex justify-content-center">
-                <input type="button" class="btn btn-primary js-filter me-2" name="all" value="tout">
-                <input type="button" class="btn btn-primary js-filter me-2" name="activated" value="activés">
-                <input type="button" class="btn btn-primary js-filter" name="disabled" value="désactivés">
-            </div>
-            <input type="text" class="form-control js-query"
-                   placeholder="Filtrer par nom">
-            <input type="hidden" name="page" value="{{ page }}">
-        </form>
+    <form id="filters" class="mb-2">
+        <select class="form-select select-filters" aria-label="Default select example">
+            <option value="all" selected>tout</option>
+            <option value="activated">activés</option>
+            <option value="disabled">désactivés</option>
+        </select>
+        <input type="text" class="form-control js-query" placeholder="Filtrer par nom">
+        <input type="hidden" name="page" value="{{ page }}">
+    </form>
 
-        <a class="btn btn-success mb-3 mx-3 add-user" href="{{ path('app_register_partner') }}">Ajouter un
-            partenaire</a>
+    <a class="btn btn-success mb-3 mx-3 add-user" href="{{ path('app_register_partner') }}">Ajouter un
+        partenaire</a>
 
-        <div id="content" class="row justify-content-center content">
-            {% include "partner/_content.html.twig" %}
-        </div>
-
+    <div id="content" class="row justify-content-center content">
+        {% include "partner/_content.html.twig" %}
     </div>
 
-    {% include "_partials/_modal_switch.html.twig" %}
-    {% include "_partials/_modal_delete.html.twig" %}
+</div>
+
+{% include "_partials/_modal_switch.html.twig" %}
+{% include "_partials/_modal_delete.html.twig" %}
 
 {% endblock %}

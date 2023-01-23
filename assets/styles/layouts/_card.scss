@@ -23,6 +23,7 @@
 
 .modal-switch-user {
   z-index: 2;
+  cursor: pointer;
 }
 
 .form-check-input {
@@ -55,6 +56,10 @@
   top: 50%;
   transform: translateY(50%);
 }
+
+// .pointer {
+//   cursor: pointer;
+// }
 
 @media screen and (min-width: 578px) {
   .card-module {

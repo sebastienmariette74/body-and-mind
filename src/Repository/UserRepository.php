@@ -97,31 +97,31 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
 
-    public function getPaginated($page, $limit, $role, $filter, $querySearch)
-    {
-        $query = $this->createQueryBuilder('u')
-            ->where('u.roles LIKE :role')
-            ->setParameter('role', '%"' . $role . '"%')
-            ->setFirstResult(($page * $limit) - $limit)
-            ->setMaxResults($limit)
-            ->orderBy('u.name');
+public function getPaginated($page, $limit, $role, $filter, $querySearch)
+{
+    $query = $this->createQueryBuilder('u')
+        ->where('u.roles LIKE :role')
+        ->setParameter('role', '%"' . $role . '"%')
+        ->setFirstResult(($page * $limit) - $limit)
+        ->setMaxResults($limit)
+        ->orderBy('u.name');
 
-        if ($filter === 'activated') {
-            $query->andWhere('u.isActivated = true');
-        }
-
-        if ($filter === 'disabled') {
-            $query->andWhere('u.isActivated = false');
-        }
-
-        if ($querySearch != null) {
-            $query->andWhere('u.name LIKE :query')
-                ->setParameter('query', '%' . $querySearch . '%')
-                ->orderBy('u.name');
-        }
-
-        return $query->getQuery()->getResult();
+    if ($filter === 'activated') {
+        $query->andWhere('u.isActivated = true');
     }
+
+    if ($filter === 'disabled') {
+        $query->andWhere('u.isActivated = false');
+    }
+
+    if ($querySearch != null) {
+        $query->andWhere('u.name LIKE :query')
+            ->setParameter('query', '%' . $querySearch . '%')
+            ->orderBy('u.name');
+    }
+
+    return $query->getQuery()->getResult();
+}
 
     public function getTotal($role, $filter, $querySearch)
     {

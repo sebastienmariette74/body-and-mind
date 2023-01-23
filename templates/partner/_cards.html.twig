@@ -19,7 +19,7 @@
             {% set checked = structure.isActivated ? 'checked' : '' %}
 
             <div class="form-check form-switch d-flex mb-3">
-                <input class="form-check-input modal-switch-user btn-lg" type="checkbox" role="switch" {{ checked }}
+                <input class="form-check-input modal-switch-user btn-lg pointer" type="checkbox" role="switch" {{ checked }}
                        data-name="{{ structure.name is defined ? structure.name : partner.name }}"
                        data-role="{{ role }}"
                        data-id="{{ structure.id }}" 

@@ -1,5 +1,7 @@
 # ECF salle de sport
 
+[https://body-and-mind.fly.dev/](https://body-and-mind.fly.dev/)
+
 ### Description
 
 Application à destination de l'équipe technique de la marque en vue de gérer les droits d'accès des applications web de

@@ -11,24 +11,24 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class PaginationService extends ServiceEntityRepository
 {
-    // public function __construct(private RequestStack $request){}
-
+    public function __construct(private RequestStack $request){}
+    
     public function pagination(
         Request $request,
         UserRepository $userRepo,
         int $limit,
-        string $function,
+        string $getPaginated,
         string $filter = null,
         string $role,
         string $query = null,
-        string $functionTotal
+        string $getTotal
     ): array
     {
         $limit = 9;
         $page = htmlentities((int)$request->query->get("page", 1));
         
-        $partners = $userRepo->$function($page, $limit, $role, $filter, $query);
-        $total = $userRepo->$functionTotal($role, $filter, $query);
+        $partners = $userRepo->$getPaginated($page, $limit, $role, $filter, $query);
+        $total = $userRepo->$getTotal($role, $filter, $query);
 
         return [ 
             'page' => $page,
@@ -36,6 +36,5 @@ class PaginationService extends ServiceEntityRepository
             'total' => $total,
             'partners' => $partners,
         ];
-    }
-    
+    }    
 }

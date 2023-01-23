@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\Module;
 use App\Entity\User;
 use App\Entity\UserModule;
-use App\Form\RegisterPartnerType;
-use App\Form\RegisterStructureType;
 use App\Form\RegistrationType;
 use App\Repository\UserModuleRepository;
 use App\Repository\UserRepository;
@@ -14,13 +12,10 @@ use App\Service\JWTService;
 use App\Service\PaginationService;
 use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,17 +24,15 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/partenaires', name: 'partners_')]
 class PartnerController extends AbstractController
 {
-
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $em, UserModuleRepository $userModuleRepository)
-    { {
-            $this->userRepository = $userRepository;
-            $this->userModuleRepository = $userModuleRepository;
-            $this->em = $em;
-        }
-    }
+    public function __construct(
+        private UserRepository $userRepository, 
+        private EntityManagerInterface $em, 
+        private UserModuleRepository $userModuleRepository,
+        private PaginationService $pagination
+    ){}
 
     #[Route('/', name: '')]
-    public function index(Request $request, PaginationService $pagination, UserRepository $userRepo): Response
+    public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -47,14 +40,16 @@ class PartnerController extends AbstractController
         if (!$request->get('ajax')) {
 
             if ($request->get("filter") != "") {
-                if ($request->get("filter") == "activated" || $request->get("filter") == "all"  || $request->get("filter") == "disabled") {
+                if (
+                    $request->get("filter") == "activated" || 
+                    $request->get("filter") == "all"  || $request->get("filter") == "disabled") {
                     $filter = htmlentities($request->get("filter"));
                 } else {
                     return $this->render('errors/error.html.twig');
                 }
             }
 
-            $paginate = $pagination->pagination($request, $userRepo, 9, "getPaginated", null, "ROLE_PARTNER", null, "getTotal");
+            $paginate = $this->pagination->pagination($request, $this->userRepository, 9, "getPaginated", null, "ROLE_PARTNER", null, "getTotal");
             $partners = $paginate['partners'];
             $total = $paginate['total'];
             $limit = $paginate['limit'];
@@ -70,7 +65,10 @@ class PartnerController extends AbstractController
         } else {
             
             if ($request->get("filter") != "") {
-                if ($request->get("filter") == "activated" || $request->get("filter") == "all"  || $request->get("filter") == "disabled") {
+                if (
+                    $request->get("filter") == "activated" || 
+                    $request->get("filter") == "all"  || 
+                    $request->get("filter") == "disabled") {
                     $filter = htmlentities($request->get("filter"));
                 } else {
                     return $this->render('errors/error.html.twig');
@@ -78,7 +76,15 @@ class PartnerController extends AbstractController
             }
 
             $query = htmlentities($request->get("query"));
-            $paginate = $pagination->pagination($request, $userRepo, 9, "getPaginated", $filter, "ROLE_PARTNER", $query, "getTotal");
+            $paginate = $this->pagination->pagination(
+                $request, $this->userRepository, 
+                9, 
+                "getPaginated", 
+                $filter, 
+                "ROLE_PARTNER", 
+                $query, 
+                "getTotal"
+            );
             $partners = $paginate['partners'];
             $total = $paginate['total'];
             $limit = $paginate['limit'];
@@ -126,7 +132,7 @@ class PartnerController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        $partners = $this->userRepository->findAllByRole("ROLE_PARTNER");
+        $partners = $userRepository->findAllByRole("ROLE_PARTNER");
 
         if ($user->getRoles()[0] === 'ROLE_PARTNER') {
             $user->setIsActivated(($user->isIsActivated()) ? false : true);

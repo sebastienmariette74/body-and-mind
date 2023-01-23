@@ -21,11 +21,13 @@
         {% endif %}
     </p>
 
-    <p>
-        Votre inscription sur le site "Body &amp; Mind" est à valider en cliquant sur le lien ci -dessous : <br><br>
-        <a href="{{ absolute_url(path('verify_user', {token : token})) }}">{{ absolute_url(path('verify_user', {token :
-            token})) }}</a>
-    </p>
+<p>
+    Votre inscription sur le site "Body &amp; Mind" est à valider en cliquant 
+    sur le lien ci -dessous : 
+    <a href="{{ absolute_url(path('verify_user', {token : token})) }}">
+        {{ absolute_url(path('verify_user', {token : token})) }}
+    </a>
+</p>
     <p>Attention, ce lien expirera dans 3 heures.</p>
 
     <p><strong>Lors de votre première connexion, après avoir cliqué sur le lien ci-dessus :</strong>

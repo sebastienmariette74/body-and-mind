@@ -3,12 +3,59 @@ import { async } from "../functions/async.js";
 
 // ____________________ MODAL ACTIVATION D'UN PARTENAIRE/STRUCTURE ____________________//
 
-$(".modal-switch-user").css("cursor", "pointer");
-
 let slug = "";
 let name = "";
 
 $("#cards").on("click", ".modal-switch-user", function (e) {
+  if (
+    $(this).data("disabled") === "disabled" ||
+    $(this).data("role") != "admin"
+  ) {
+    console.log("1");
+    e.preventDefault();
+    if ($(this).data("disabled") === "disabled") {
+      $("#modal-switch").css("display", "block");
+      $(".modal-body-switch .question").css("display", "none");
+      $(".modal-body-switch .para1").text(
+        `La salle ne peut pas être activée quand le partenaire est désactivé.`
+      );
+      $("#btn-switch").css("display", "none");
+      $("#btn-switch-cancel").text("VALIDER");
+      $("#btn-switch-cancel").css({
+        backgroundColor: "#0d6efd",
+        border: "none",
+        outline: "none",
+      });
+    }
+  } else {
+    e.preventDefault();
+    console.log("2");
+    let switchChecked = $(this).is(":checked");
+    name = $(this).data("name");
+    if (!switchChecked) {
+      console.log("3");
+      $("#modal-switch").css("display", "block");
+      $(".modal-body-switch .question1").text(
+        `Etes-vous sûr de vouloir désactiver `
+      );
+      $(".modal-body-switch .question2").text(name);
+      $(".modal-body-switch .para1").css("display", "none");
+    } else {
+      console.log("4");
+      $("#modal-switch").css("display", "block");
+      $(".modal-body-switch .question1").text(
+        `Etes-vous sûr de vouloir activer `
+      );
+      $(".modal-body-switch .question2").text(name);
+      $(".modal-body-switch .para1").css("display", "none");
+    }
+
+    $("#modal-switch").css("display", "block");
+    slug = $(this).data("slug");
+  }
+});
+
+$("#content").on("click", ".modal-switch-user", function (e) {
   if (
     $(this).data("disabled") === "disabled" ||
     $(this).data("role") != "admin"
@@ -23,9 +70,9 @@ $("#cards").on("click", ".modal-switch-user", function (e) {
       $("#btn-switch").css("display", "none");
       $("#btn-switch-cancel").text("VALIDER");
       $("#btn-switch-cancel").css({
-        "backgroundColor": "#0d6efd",
-        "border": "none",
-        "outline": "none"
+        backgroundColor: "#0d6efd",
+        border: "none",
+        outline: "none",
       });
     }
   } else {
@@ -37,74 +84,27 @@ $("#cards").on("click", ".modal-switch-user", function (e) {
         `Etes-vous sûr de vouloir désactiver `
       );
       $(".modal-body-switch .question2").text(name);
-      let url = "";
       let href = window.location.pathname.split("/");
       if (href.includes("partenaires")) {
         $(".modal-body-switch .para1").css("display", "block");
         $(".modal-body-switch .para1").text(
           `En désactivant ce partenaire, vous désactiverez toutes les structures auquel elles sont rattachées.`
         );
+      } else {
+        $(".modal-body-switch .para1").css("display", "none");
       }
+      console.log('1');
     } else {
       $(".modal-body-switch .question1").text(
         `Etes-vous sûr de vouloir activer `
       );
       $(".modal-body-switch .question2").text(name);
       $(".modal-body-switch .para1").css("display", "none");
+      console.log('2');
     }
-
     $("#modal-switch").css("display", "block");
     slug = $(this).data("slug");
   }
-});
-
-$("#content").on("click", ".modal-switch-user", function (e) {
-    if (
-        $(this).data("disabled") === "disabled" ||
-        $(this).data("role") != "admin"
-    ) {
-        e.preventDefault();
-        if ($(this).data("disabled") === "disabled") {
-        $("#modal-switch").css("display", "block");
-        $(".modal-body-switch .question").css("display", "none");
-        $(".modal-body-switch .para1").text(
-            `La salle ne peut pas être activée quand le partenaire est désactivé.`
-        );
-        $("#btn-switch").css("display", "none");
-        $("#btn-switch-cancel").text("VALIDER");
-        $("#btn-switch-cancel").css({
-          "backgroundColor": "#0d6efd",
-          "border": "none",
-          "outline": "none"
-        });
-        }
-    } else {
-        e.preventDefault();
-        let switchChecked = $(this).is(":checked");
-        name = $(this).data("name");
-        if (!switchChecked) {
-        $(".modal-body-switch .question1").text(
-            `Etes-vous sûr de vouloir désactiver `
-        );
-        $(".modal-body-switch .question2").text(name);
-        let href = window.location.pathname.split("/");
-        if (href.includes("partenaires")) {
-            $(".modal-body-switch .para1").css("display", "block");
-            $(".modal-body-switch .para1").text(
-            `En désactivant ce partenaire, vous désactiverez toutes les structures auquel elles sont rattachées.`
-            );
-        }
-        } else {
-        $(".modal-body-switch .question1").text(
-            `Etes-vous sûr de vouloir activer `
-        );
-        $(".modal-body-switch .question2").text(name);
-        $(".modal-body-switch .para1").css("display", "none");
-        }
-        $("#modal-switch").css("display", "block");
-        slug = $(this).data("slug");
-    }
-
 });
 
 $(".btn-switch").on("click", function (e) {

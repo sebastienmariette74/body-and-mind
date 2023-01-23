@@ -8,11 +8,11 @@
     <div>
 
         <form id="filters" class="mb-3">
-            <div class="d-flex justify-content-center">
-                <input type="button" class="btn btn-primary js-filter me-2" name="all" value="tout">
-                <input type="button" class="btn btn-primary js-filter me-2" name="activated" value="activés">
-                <input type="button" class="btn btn-primary js-filter" name="disabled" value="désactivés">
-            </div>
+            <select class="form-select select-filters" aria-label="Default select example">
+                <option value="all" selected>tout</option>
+                <option value="activated">activés</option>
+                <option value="disabled">désactivés</option>
+            </select>
             <input type="text" class="form-control js-query d-inline-block" placeholder="Filtrer par nom">
             <input type="hidden" name="page" value="{{ page }}">
         </form>

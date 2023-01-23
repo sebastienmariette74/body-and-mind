@@ -24,18 +24,17 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ModuleController extends AbstractController
 {
 
-    public function __construct(ModuleRepository $moduleRepository, EntityManagerInterface $em)
-    {
-        $this->moduleRepository = $moduleRepository;
-        $this->em = $em;
-    }
+    public function __construct(
+        private ModuleRepository $moduleRepository, 
+        private EntityManagerInterface $em
+    )
+    {}
 
     #[Route('/', name: '')]
     public function index(): Response
     {
 
         $modules = $this->moduleRepository->findAll();
-
 
         return $this->render('modules/index.html.twig', compact('modules'));
     }

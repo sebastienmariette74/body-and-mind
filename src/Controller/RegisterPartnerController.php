@@ -129,42 +129,42 @@ class RegisterPartnerController extends AbstractController
         return $this->redirectToRoute("structures_details", ['slug' => $user->getSlug()]);
     }
 
-    #[Route('/renvoiverif', name: 'resend_verif')]
-    public function resendVerif(JWTService $jwt, SendMailService $mail, UserRepository $userRepository): Response
-    {
-        $user = $this->getUser();
+#[Route('/renvoiverif', name: 'resend_verif')]
+public function resendVerif(JWTService $jwt, SendMailService $mail, UserRepository $userRepository): Response
+{
+    $user = $this->getUser();
 
-        if(!$user){
-            $this->addFlash('danger', 'Vous devez être connecté pour accéder à cette page');
-            return $this->redirectToRoute('app_login');    
-        }
-
-        if($user->isVerified()){
-            $this->addFlash('warning', 'Cet utilisateur est déjà activé');
-            return $this->redirectToRoute("structures_details", ['slug' => $user->getSlug()]);    
-        }
-
-        $header = [
-            'typ' => 'JWT',
-            'alg' => 'HS256'
-        ];
-        $payload = [
-            'user_id' => $user->getId()
-        ];
-        $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
-        
-        $mail->send(
-            'no-reply@monsite.net',
-            $user->getEmail(),
-            'Activation de votre compte sur le site e-commerce',
-            'register',
-            compact('user', 'token')
-        );
-        $this->addFlash('success', 'Email de vérification envoyé');
-        if ($this->isGranted('ROLE_PARTNER')) {
-            return $this->redirectToRoute('partners_details', ['slug' => $user->getSlug()]);
-        } else if($this->isGranted('ROLE_STRUCTURE')) {
-            return $this->redirectToRoute('structures_details', ['slug' => $user->getSlug()]);
-        };
+    if(!$user){
+        $this->addFlash('danger', 'Vous devez être connecté pour accéder à cette page');
+        return $this->redirectToRoute('app_login');    
     }
+
+    if($user->isVerified()){
+        $this->addFlash('warning', 'Cet utilisateur est déjà activé');
+        return $this->redirectToRoute("structures_details", ['slug' => $user->getSlug()]);    
+    }
+
+    $header = [
+        'typ' => 'JWT',
+        'alg' => 'HS256'
+    ];
+    $payload = [
+        'user_id' => $user->getId()
+    ];
+    $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
+    
+    $mail->send(
+        'no-reply@monsite.net',
+        $user->getEmail(),
+        'Activation de votre compte sur le site e-commerce',
+        'register',
+        compact('user', 'token')
+    );
+    $this->addFlash('success', 'Email de vérification envoyé');
+    if ($this->isGranted('ROLE_PARTNER')) {
+        return $this->redirectToRoute('partners_details', ['slug' => $user->getSlug()]);
+    } else if($this->isGranted('ROLE_STRUCTURE')) {
+        return $this->redirectToRoute('structures_details', ['slug' => $user->getSlug()]);
+    };
+}
 }

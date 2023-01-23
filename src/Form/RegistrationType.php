@@ -17,16 +17,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationType extends AbstractType
 {
-
-    // public function __construct(private UserRepository $userRepo){}
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('email', EmailType::class)
             ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => [
                     'autocomplete' => 'new-password'
@@ -38,27 +33,22 @@ class RegistrationType extends AbstractType
                     new Length([
                         'min' => 5,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
             ])
             ->add('name', TextType::class, [
-
                 'label' => 'Nom',
             ])
             ->add('address', TextType::class, [
-
                 'label' => 'Adresse',
                 'required' => false
             ])
             ->add('zipcode', TextType::class, [
-
                 'label' => 'Code postal',
                 'required' => false
             ])
             ->add('city', TextType::class, [
-
                 'label' => 'Ville',
                 'required' => false
             ])
@@ -66,10 +56,10 @@ class RegistrationType extends AbstractType
                 'label_attr' => [
                     'class' => 'checkbox-inline',
                 ],
-                'label' => 'activé'
+                'label' => 'activé',
+                'required' => false
             ])
             ->add('slug', TextType::class, [
-
                 'label' => 'slug'
             ])
             ->add('partner', EntityType::class, [
