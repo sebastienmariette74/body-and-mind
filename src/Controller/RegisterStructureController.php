@@ -94,13 +94,13 @@ class RegisterStructureController extends AbstractController
             $slug = $structure->getSlug();
             $url = $this->generateUrl('structures_details', ['slug' => $slug], UrlGeneratorInterface::ABSOLUTE_URL);
 
-            $mail->send(
-                'noreply@bodyandmind.fr',
-                $partner->getEmail(),
-                'Activation du compte de votre salle de sport',
-                'info_partner',
-                compact('structure', 'url', 'partner')
-            );
+            // $mail->send(
+            //     'noreply@bodyandmind.fr',
+            //     $partner->getEmail(),
+            //     'Activation du compte de votre salle de sport',
+            //     'info_partner',
+            //     compact('structure', 'url', 'partner')
+            // );
 
             $this->addFlash('success', 'Emails envoyés avec succès');
 
