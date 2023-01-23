@@ -29,7 +29,7 @@ class RegisterStructureController extends AbstractController
         UserAuthenticatorInterface $userAuthenticator , 
         EntityManagerInterface $entityManager, 
         SluggerInterface $slugger,
-        SendMailService $mail, 
+        // SendMailService $mail, 
         JWTService $jwt,
         UserRepository $userRepository,
         ModuleRepository $moduleRepository,
@@ -81,13 +81,13 @@ class RegisterStructureController extends AbstractController
 
             $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
             
-            $mail->send(
-                'noreply@bodyandmind.fr',
-                $structure->getEmail(),
-                'Activation de votre compte sur le site Body & Mind',
-                'register',
-                compact('structure', 'token')
-            );
+            // $mail->send(
+            //     'noreply@bodyandmind.fr',
+            //     $structure->getEmail(),
+            //     'Activation de votre compte sur le site Body & Mind',
+            //     'register',
+            //     compact('structure', 'token')
+            // );
 
             $structureName = $structure->getName();
             $subject = `Activation du compte de la salle de sport : $structureName}`;

@@ -26,7 +26,7 @@ class RegisterPartnerController extends AbstractController
 {
     #[Route('/enregistrement/partenaire', name: 'app_register_partner')]
 
-    public function __construct(private SendMailService $mail){}
+    // public function __construct(private SendMailService $mail){}
     
     public function index(
         Request $request, 
