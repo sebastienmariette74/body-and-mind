@@ -27,7 +27,7 @@ class RegisterPartnerController extends AbstractController
 {
     #[Route('/enregistrement/partenaire', name: 'app_register_partner')]
 
-    // public function __construct(private SendMailService $mail){}
+    public function __construct(private SendMailService $mail){}
     
     public function index(
         Request $request, 
@@ -35,7 +35,6 @@ class RegisterPartnerController extends AbstractController
         UserAuthenticatorInterface $userAuthenticator, 
         EntityManagerInterface $entityManager, 
         SluggerInterface $slugger, 
-        SendMailService $mail, 
         JWTService $jwt,
         ModuleRepository $moduleRepository
     ): Response
@@ -91,7 +90,7 @@ class RegisterPartnerController extends AbstractController
             ];
             $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
-            $mail->send(
+            $this->mail->send(
                 'noreply@bodyandmind.fr',
                 $partner->getEmail(),
                 'Activation de votre compte sur le site Body & Mind',
@@ -109,7 +108,12 @@ class RegisterPartnerController extends AbstractController
     }
 
     #[Route('/verif/{token}', name: 'verify_user')]
-    public function verifyUser($token, JWTService $jwt, UserRepository $userRepository, EntityManagerInterface $em): Response
+    public function verifyUser(
+        $token, 
+        JWTService $jwt, 
+        UserRepository $userRepository, 
+        EntityManagerInterface $em
+    ): Response
     {
 
         if($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))){
@@ -135,7 +139,7 @@ class RegisterPartnerController extends AbstractController
     }
 
 #[Route('/renvoiverif', name: 'resend_verif')]
-public function resendVerif(JWTService $jwt, SendMailService $mail, UserRepository $userRepository): Response
+public function resendVerif(JWTService $jwt, UserRepository $userRepository): Response
 {
     $user = $this->getUser();
 
@@ -158,7 +162,7 @@ public function resendVerif(JWTService $jwt, SendMailService $mail, UserReposito
     ];
     $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
     
-    $mail->send(
+    $this->mail->send(
         'no-reply@monsite.net',
         $user->getEmail(),
         'Activation de votre compte sur le site e-commerce',
