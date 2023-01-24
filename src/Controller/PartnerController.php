@@ -38,7 +38,7 @@ class PartnerController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $filter = htmlentities($request->get("filter"));
         if (!$request->get('ajax')) {
-            $limit = 9;
+            $limit = 12;
             if ($request->get("filter") != "") {
                 if (
                     $request->get("filter") == "activated" || 
@@ -170,7 +170,7 @@ class PartnerController extends AbstractController
             if ($request->get("limit") !== null){
                 $limit = (int)(htmlentities($request->get("limit")));
             } else {
-                $limit = 9;
+                $limit = 12;
             }
             $filter = htmlentities($request->get("filter"));
             $query = htmlentities($request->get("query"));

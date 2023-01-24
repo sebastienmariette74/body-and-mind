@@ -30,7 +30,7 @@ class StructureController extends AbstractController
 
         $filter = htmlentities($request->get("filter"));
         if (!$request->get('ajax')) {
-            $limit = 9;
+            $limit = 12;
             if ($request->get("filter") != "") {
                 if (
                     $request->get("filter") == "activated" ||
@@ -41,7 +41,7 @@ class StructureController extends AbstractController
                     return $this->render('errors/error.html.twig');
                 }
             }
-            $paginate = $pagination->pagination($request, $this->userRepo, 9, "getPaginated", null, "ROLE_STRUCTURE", null, "getTotal");
+            $paginate = $pagination->pagination($request, $this->userRepo, $limit, "getPaginated", null, "ROLE_STRUCTURE", null, "getTotal");
             $structures = $paginate['response'];
             $total = $paginate['total'];
             $page = $paginate['page'];
@@ -176,11 +176,11 @@ class StructureController extends AbstractController
         if ($request->get("limit") !== null) {
             $limit = (int)(htmlentities($request->get("limit")));
         } else {
-            $limit = 9;
+            $limit = 12;
         }
         $filter = htmlentities($request->get("filter"));
         $query = htmlentities($request->get("query"));
-        $paginate = $pagination->pagination($request, $this->userRepo, 9, "getPaginated", $filter, "ROLE_STRUCTURE", $query, "getTotal");
+        $paginate = $pagination->pagination($request, $this->userRepo, $limit, "getPaginated", $filter, "ROLE_STRUCTURE", $query, "getTotal");
         $structures = $paginate['response'];
         $total = $paginate['total'];
         $page = $paginate['page'];
