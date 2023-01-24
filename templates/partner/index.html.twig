@@ -9,19 +9,25 @@
 <div>
 
     <form id="filters" class="mb-2">
-        <select class="form-select select-filters filters" aria-label="Default select example">
-            <option value="all" selected>tout</option>
-            <option value="activated">activés</option>
-            <option value="disabled">désactivés</option>
-        </select>
-        <input type="text" class="form-control js-query" placeholder="Filtrer par nom">
-        <input type="hidden" name="page" value="{{ page }}">
-        <div class="mb-3 d-flex justify-content-center limit">
-            <span class="me-3">
-                Nombre de franchisés par page :
-            </span>
-            <input type="number" name="number" id="limit" class="filters form-control" value="{{ limit }}" min="1" max="12">
+        <div class="d-flex justify-content-center align-items-center" style="height: 40px; line-height: 40px">
+            <div>
+                <select class="form-select select-filters filters" aria-label="Default select example">
+                    <option value="all" selected>tout</option>
+                    <option value="activated">activés</option>
+                    <option value="disabled">désactivés</option>
+                </select>
+            </div>
+            <div class="mx-3">
+                <input type="text" class="form-control js-query" placeholder="Filtrer par nom">
+            </div>
+            <div class="m-0 d-flex justify-content-center limit">
+                <span class="me-3">
+                    Nombre de franchisés par page :
+                </span>
+                <input type="number" name="number" id="limit" class="filters form-control" value="{{ limit }}" min="1" max="12">
+            </div>
         </div>
+        <input type="hidden" name="page" value="{{ page }}">
     </form>
 
     <a class="btn btn-success mb-3 mx-3 add-user" href="{{ path('app_register_partner') }}">Ajouter un
