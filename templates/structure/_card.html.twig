@@ -17,7 +17,7 @@
         {% set disabled = not structure.partner.isActivated ? 'disabled' : '' %}
 
         <div class="form-check form-switch d-flex mb-3">
-            <input class="form-check-input activate-user modal-switch-user btn-lg" {{is_granted('ROLE_ADMIN') ? "" : "disabled"}} type="checkbox"
+            <input class="form-check-input activate-user modal-switch-user btn-lg" type="checkbox"
                    role="switch" {{ checked }}
                    data-role="{{ role }}" data-id="{{ structure.id }}" data-name="{{ structure.name }}"
                    data-slug="{{ structure.slug }}"
