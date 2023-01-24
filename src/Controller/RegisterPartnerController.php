@@ -35,7 +35,7 @@ class RegisterPartnerController extends AbstractController
         UserAuthenticatorInterface $userAuthenticator, 
         EntityManagerInterface $entityManager, 
         SluggerInterface $slugger, 
-        // SendMailService $mail, 
+        SendMailService $mail, 
         JWTService $jwt,
         ModuleRepository $moduleRepository
     ): Response
