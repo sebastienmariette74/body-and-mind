@@ -11,7 +11,6 @@ $("#cards").on("click", ".modal-switch-user", function (e) {
     $(this).data("disabled") === "disabled" ||
     $(this).data("role") != "admin"
   ) {
-    console.log("1");
     e.preventDefault();
     if ($(this).data("disabled") === "disabled") {
       $("#modal-switch").css("display", "block");
@@ -29,11 +28,9 @@ $("#cards").on("click", ".modal-switch-user", function (e) {
     }
   } else {
     e.preventDefault();
-    console.log("2");
     let switchChecked = $(this).is(":checked");
     name = $(this).data("name");
     if (!switchChecked) {
-      console.log("3");
       $("#modal-switch").css("display", "block");
       $(".modal-body-switch .question1").text(
         `Etes-vous sûr de vouloir désactiver `
@@ -41,7 +38,6 @@ $("#cards").on("click", ".modal-switch-user", function (e) {
       $(".modal-body-switch .question2").text(name);
       $(".modal-body-switch .para1").css("display", "none");
     } else {
-      console.log("4");
       $("#modal-switch").css("display", "block");
       $(".modal-body-switch .question1").text(
         `Etes-vous sûr de vouloir activer `
@@ -93,14 +89,12 @@ $("#content").on("click", ".modal-switch-user", function (e) {
       } else {
         $(".modal-body-switch .para1").css("display", "none");
       }
-      console.log('1');
     } else {
       $(".modal-body-switch .question1").text(
         `Etes-vous sûr de vouloir activer `
       );
       $(".modal-body-switch .question2").text(name);
       $(".modal-body-switch .para1").css("display", "none");
-      console.log('2');
     }
     $("#modal-switch").css("display", "block");
     slug = $(this).data("slug");

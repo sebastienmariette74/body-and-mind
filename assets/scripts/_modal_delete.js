@@ -4,7 +4,6 @@ import { async } from "../functions/async.js";
 // ____________________ MODAL SUPPRESSION D'UN PARTENAIRE/STRUCTURE ____________________//
 
 $(".modal_trigger").on("click", function (e) {
-  console.log("ok");
   $("#modal-delete").css("display", "block");
 });
 
@@ -28,7 +27,6 @@ $("#cards").on("click", ".modal-trigger", function (e) {
 
 $(".btn-delete-cancel").on("click", function (e) {
   e.preventDefault();
-  console.log("ok");
   $("#modal-delete").css("display", "none");
 });
 
