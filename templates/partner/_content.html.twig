@@ -1,5 +1,6 @@
 {% block flash %}{% include "_partials/_flash.html.twig" %}{% endblock %}
 
+{% if partners is not null %}
 {% for partner in partners %}
     <div class="card col-sm-9 m-3">
         {# <img src="..." class="card-img-top" alt="..."> #}
@@ -40,5 +41,9 @@
     </div>
 
 {% endfor %}
+{% else %}
+    AUCUN PARTENAIRE TROUVE
+{% endif %}
+
 
 {% include "_partials/_pagination.html.twig" %}
