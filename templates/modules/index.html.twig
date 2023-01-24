@@ -2,10 +2,19 @@
 
 {% block title %}Liste des droits{% endblock %}
 
-{% block PageTitle %}<h1 class="my-3">Liste des droits</h1>{% endblock %}
+{% block PageTitle %}
+<h1 class="my-3">
+    <div>
+        <span>Liste des droits</span>
+        {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('modules_add') }}"><img src="{{ asset('build/images/plus.png') }}" alt=""
+                class="img-fluid"></a>
+        {% endif %}
+    </div>
+</h1>{% endblock %}
 
 {% block body %}
-    <a href="{{ path('modules_add') }}" class="btn btn-success add-user mx-3">Ajouter un droit</a>
+    {# <a href="{{ path('modules_add') }}" class="btn btn-success add-user mx-3">Ajouter un droit</a> #}
 
     <div id="content" class="row justify-content-center">
 

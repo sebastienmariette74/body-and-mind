@@ -2,38 +2,54 @@
 
 {% block title %}Les structures{% endblock %}
 
-{% block PageTitle %}<h1 class="my-3">Les structures</h1>{% endblock %}
+{% block PageTitle %}
+<h1 class="my-3">
+    <div>
+        <span>Les structures</span>
+        {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_register_structure') }}"><img src="{{ asset('build/images/plus.png') }}" alt=""
+                class="img-fluid"></a>
+        {% endif %}
+    </div>
+</h1>{% endblock %}
 
 {% block body %}
-    <div>
+<div>
 
-        <form id="filters" class="mb-2">
-            <select class="form-select select-filters filters" aria-label="Default select example">
-                <option value="all" selected>tout</option>
-                <option value="activated">activés</option>
-                <option value="disabled">désactivés</option>
-            </select>
-            <input type="text" class="form-control js-query" placeholder="Filtrer par nom">
-            <input type="hidden" name="page" value="{{ page }}">
-            <div class="mb-3 d-flex justify-content-center limit">
+    <form id="filters" class="mb-2">
+        <div class="display-query ">
+            <div>
+                <select class="form-select select-filters filters" aria-label="Default select example">
+                    <option value="all" selected>tout</option>
+                    <option value="activated">activés</option>
+                    <option value="disabled">désactivés</option>
+                </select>
+            </div>
+            <div class="mx-3">
+                <input type="text" class="form-control js-query" placeholder="Filtrer par nom">
+            </div>
+            <div class="m-0 d-flex justify-content-center limit">
                 <span class="me-3">
                     Nombre de franchisés par page :
                 </span>
-                <input type="number" name="number" id="limit" class="filters form-control" value="{{ limit }}" min="1" max="12">
+                <input type="number" name="number" id="limit" class="filters form-control" value="{{ limit }}" min="1"
+                    max="12">
             </div>
-        </form>
-
-        <a class="btn btn-success mb-3 mx-3 add-user" href="{{ path('app_register_structure') }}">Ajouter une
-            structure</a>
-
-
-        <div id="content" class="row justify-content-center content">
-            {% include "structure/_content.html.twig" %}
         </div>
+        <input type="hidden" name="page" value="{{ page }}">
+    </form>
 
+    {# <a class="btn btn-success mb-3 mx-3 add-user" href="{{ path('app_register_structure') }}">Ajouter une
+        structure</a> #}
+
+
+    <div id="content" class="row justify-content-center content">
+        {% include "structure/_content.html.twig" %}
     </div>
 
-    {% include "_partials/_modal_switch.html.twig" %}
-    {% include "_partials/_modal_delete.html.twig" %}
+</div>
+
+{% include "_partials/_modal_switch.html.twig" %}
+{% include "_partials/_modal_delete.html.twig" %}
 
 {% endblock %}

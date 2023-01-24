@@ -1,7 +1,7 @@
 
 .js-query {
   width: 298px;
-  margin: 8px auto 0;
+  margin: 8px auto 8px;
 }
 
 .add-user {
@@ -9,4 +9,23 @@
   width: 298px;
   margin: 0 auto;
   margin-bottom: 16px;
+}
+
+.display-query {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 1098px){
+
+  .js-query {
+    margin: 0 20px;
+  }
+
+  .display-query {
+    flex-direction: row;
+    justify-content: center;
+    height: 40px;
+    line-height: 40px;
+  }
 }
