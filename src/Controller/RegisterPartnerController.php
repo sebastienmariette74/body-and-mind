@@ -91,13 +91,13 @@ class RegisterPartnerController extends AbstractController
             ];
             $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
-            // $mail->send(
-            //     'noreply@bodyandmind.fr',
-            //     $partner->getEmail(),
-            //     'Activation de votre compte sur le site Body & Mind',
-            //     'register',
-            //     compact('partner', 'token')
-            // );
+            $mail->send(
+                'noreply@bodyandmind.fr',
+                $partner->getEmail(),
+                'Activation de votre compte sur le site Body & Mind',
+                'register',
+                compact('partner', 'token')
+            );
 
             $this->addFlash('success', 'Email envoyé avec succès');
 
