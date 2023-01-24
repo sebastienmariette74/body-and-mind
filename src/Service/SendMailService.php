@@ -7,10 +7,8 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class SendMailService 
 {
-    public MailerInterface $mailer ;
-    public function __construct( MailerInterface $mailer ){
-        $this->$mailer = $mailer;
-    }
+    // public MailerInterface $mailer ;
+    public function __construct(private MailerInterface $mailer ){}
 
     public function send (
         string $from,
