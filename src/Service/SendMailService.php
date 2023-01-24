@@ -7,7 +7,6 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class SendMailService 
 {
-    // public MailerInterface $mailer ;
     public function __construct(private MailerInterface $mailer ){}
 
     public function send (

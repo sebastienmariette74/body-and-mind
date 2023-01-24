@@ -1,17 +1,8 @@
 {% block flash %}{% include "_partials/_flash.html.twig" %}{% endblock %}
-{# <div class="mb-3 d-flex justify-content-center limit">
-    <span class="me-3">
-        Nombre de franchisés par page :
-    </span>
-    <input type="number" name="number" id="limit" class="filters form-control" value="{{ limit }}" min="1" max="11">
-</div> #}
 
 {% for partner in partners %}
 <div class="card col-sm-9 m-3">
-    {# <img src="..." class="card-img-top" alt="..."> #}
     <div class="card-body d-flex flex-column justify-content-between">
-
-
         <h5 class="card-title">
             <a href="{{ path('partners_details', {slug : partner.slug}) }}">{{ partner.name }}</a>
         </h5>
