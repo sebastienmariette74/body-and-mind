@@ -24,17 +24,15 @@ class PaginationService extends ServiceEntityRepository
         string $getTotal
     ): array
     {
-        $limit = 9;
         $page = htmlentities((int)$request->query->get("page", 1));
         
-        $partners = $userRepo->$getPaginated($page, $limit, $role, $filter, $query);
+        $response = $userRepo->$getPaginated($page, $limit, $role, $filter, $query);
         $total = $userRepo->$getTotal($role, $filter, $query);
 
         return [ 
             'page' => $page,
-            'limit' => $limit,
             'total' => $total,
-            'partners' => $partners,
+            'response' => $response,
         ];
     }    
 }

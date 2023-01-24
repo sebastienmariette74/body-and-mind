@@ -1,49 +1,48 @@
 {% block flash %}{% include "_partials/_flash.html.twig" %}{% endblock %}
-
-{% if partners is not null %}
+{# <div class="mb-3 d-flex justify-content-center limit">
+    <span class="me-3">
+        Nombre de franchisés par page :
+    </span>
+    <input type="number" name="number" id="limit" class="filters form-control" value="{{ limit }}" min="1" max="11">
+</div> #}
 {% for partner in partners %}
-    <div class="card col-sm-9 m-3">
-        {# <img src="..." class="card-img-top" alt="..."> #}
-        <div class="card-body d-flex flex-column justify-content-between">
+<div class="card col-sm-9 m-3">
+    {# <img src="..." class="card-img-top" alt="..."> #}
+    <div class="card-body d-flex flex-column justify-content-between">
 
 
-            <h5 class="card-title">
-                <a href="{{ path('partners_details', {slug : partner.slug}) }}">{{ partner.name }}</a>
-            </h5>
+        <h5 class="card-title">
+            <a href="{{ path('partners_details', {slug : partner.slug}) }}">{{ partner.name }}</a>
+        </h5>
 
-            {% set state = partner.partner is null ? 'partner' : 'structure' %}
-            
-            {% set checked = partner.isActivated ? 'checked' : '' %}
+        {% set state = partner.partner is null ? 'partner' : 'structure' %}
 
-            {% if partner.partner is null %}
-                {% set state = "partner" %}
-            {% else %}
-                {% set state = "structure" %}
-            {% endif %}
+        {% set checked = partner.isActivated ? 'checked' : '' %}
 
-            <div class="form-check form-switch d-flex">
-                <input class="form-check-input modal-switch-user btn-lg pointer" type="checkbox" role="switch" {{ checked }}
-                       data-role="{{ role }}" data-slug="{{ partner.slug }}" data-name="{{ partner.name }}"
-                       data-state="{{ state }}">
-            </div>
+        {% if partner.partner is null %}
+        {% set state = "partner" %}
+        {% else %}
+        {% set state = "structure" %}
+        {% endif %}
+
+        <div class="form-check form-switch d-flex">
+            <input class="form-check-input modal-switch-user btn-lg pointer" type="checkbox" role="switch" {{ checked }}
+                data-role="{{ role }}" data-slug="{{ partner.slug }}" data-name="{{ partner.name }}"
+                data-state="{{ state }}">
+        </div>
 
 
-            <div>
-                <a class="btn btn-warning" href="{{ path('partners_edit', {slug : partner.slug}) }}">Modifier</a>
+        <div>
+            <a class="btn btn-warning" href="{{ path('partners_edit', {slug : partner.slug}) }}">Modifier</a>
 
-                <button type="button" class="btn btn-danger modal-trigger" data-name="{{ partner.name }}"
-                        data-slug="{{ partner.slug }}"
-                        data-id="{{ partner.id }}">
-                    Supprimer
-                </button>
-            </div>
+            <button type="button" class="btn btn-danger modal-trigger" data-name="{{ partner.name }}"
+                data-slug="{{ partner.slug }}" data-id="{{ partner.id }}">
+                Supprimer
+            </button>
         </div>
     </div>
+</div>
 
 {% endfor %}
-{% else %}
-    AUCUN PARTENAIRE TROUVE
-{% endif %}
-
 
 {% include "_partials/_pagination.html.twig" %}

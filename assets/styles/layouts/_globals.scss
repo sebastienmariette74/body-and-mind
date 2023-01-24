@@ -6,12 +6,20 @@
     font-weight: bold;
 }
 
-.page-item {
-    z-index: -1;
-}
+// .page-item {
+//     z-index: -1;
+// }
 
 .alert {
     position: absolute;
     top: 0; 
     width: 100%;
+}
+
+.limit span {
+    line-height: 38px;
+}
+
+#limit {
+    width: 60px;
 }

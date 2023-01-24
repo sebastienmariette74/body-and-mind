@@ -36,10 +36,9 @@ class PartnerController extends AbstractController
     public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
-        $filter = $request->get('filter');
+        $filter = htmlentities($request->get("filter"));
         if (!$request->get('ajax')) {
-
+            $limit = 9;
             if ($request->get("filter") != "") {
                 if (
                     $request->get("filter") == "activated" || 
@@ -50,10 +49,9 @@ class PartnerController extends AbstractController
                 }
             }
 
-            $paginate = $this->pagination->pagination($request, $this->userRepository, 9, "getPaginated", null, "ROLE_PARTNER", null, "getTotal");
-            $partners = $paginate['partners'];
+            $paginate = $this->pagination->pagination($request, $this->userRepository, $limit, "getPaginated", null, "ROLE_PARTNER", null, "getTotal");
+            $partners = $paginate['response'];
             $total = $paginate['total'];
-            $limit = $paginate['limit'];
             $page = $paginate['page'];
 
             if ($this->isGranted('ROLE_ADMIN')) {
@@ -63,32 +61,21 @@ class PartnerController extends AbstractController
             }
 
             return $this->render('partner/index.html.twig', compact('partners', 'role', 'total', 'limit', 'page', 'filter'));
-        } else {
-            
-            if ($request->get("filter") != "") {
-                if (
-                    $request->get("filter") == "activated" || 
-                    $request->get("filter") == "all"  || 
-                    $request->get("filter") == "disabled") {
-                    $filter = htmlentities($request->get("filter"));
-                } else {
-                    return $this->render('errors/error.html.twig');
-                }
-            }
-
+        } else {       
+            $limit = (int)(htmlentities($request->get("limit")));
+            $filter = htmlentities($request->get("filter"));
             $query = htmlentities($request->get("query"));
             $paginate = $this->pagination->pagination(
                 $request, $this->userRepository, 
-                9, 
+                $limit, 
                 "getPaginated", 
                 $filter, 
                 "ROLE_PARTNER", 
                 $query, 
                 "getTotal"
             );
-            $partners = $paginate['partners'];
+            $partners = $paginate['response'];
             $total = $paginate['total'];
-            $limit = $paginate['limit'];
             $page = $paginate['page'];
 
             if ($this->isGranted('ROLE_ADMIN')) {
@@ -180,13 +167,16 @@ class PartnerController extends AbstractController
             );
 
             $this->addFlash('success', 'Email(s) envoyé(s) avec succès');
-
-            $filter = $request->get('filter');
-            $query = $request->get('query');
-            $paginate = $pagination->pagination($request, $userRepository, 9, "getPaginated", $filter, "ROLE_PARTNER", $query, "getTotal");
-            $partners = $paginate['partners'];
+            if ($request->get("limit") !== null){
+                $limit = (int)(htmlentities($request->get("limit")));
+            } else {
+                $limit = 9;
+            }
+            $filter = htmlentities($request->get("filter"));
+            $query = htmlentities($request->get("query"));
+            $paginate = $pagination->pagination($request, $userRepository, $limit, "getPaginated", $filter, "ROLE_PARTNER", $query, "getTotal");
+            $partners = $paginate['response'];
             $total = $paginate['total'];
-            $limit = $paginate['limit'];
             $page = $paginate['page'];
 
             if ($this->isGranted('ROLE_ADMIN')) {

@@ -6,11 +6,13 @@ function onClickFilter() {
   let filter = $(".select-filters option:selected").val() ?? "";
   let page = $("#filters input:hidden").attr("value");
   let query = $(".js-query").val() ?? "";
+  let limit = $("#limit").val();
 
   let filters = {
-    filter: filter,
-    page: page,
-    query: query,
+    "filter": filter,
+    "page": page,
+    "query": query,
+    "limit": limit
   };
 
   let params = new URLSearchParams();

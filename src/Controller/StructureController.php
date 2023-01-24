@@ -19,20 +19,31 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[Route('/structures', name: 'structures_')]
 class StructureController extends AbstractController
 {
-    public function __construct(private UserRepository $userRepo, private UserModuleRepository $userModuleRepository, private EntityManagerInterface $em){}
+    public function __construct(private UserRepository $userRepo, private UserModuleRepository $userModuleRepository, private EntityManagerInterface $em)
+    {
+    }
 
     #[Route('/', name: '')]
     public function index(Request $request, PaginationService $pagination): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        $filter = $request->get('filter');
+        $filter = htmlentities($request->get("filter"));
         if (!$request->get('ajax')) {
-
+            $limit = 9;
+            if ($request->get("filter") != "") {
+                if (
+                    $request->get("filter") == "activated" ||
+                    $request->get("filter") == "all"  || $request->get("filter") == "disabled"
+                ) {
+                    $filter = htmlentities($request->get("filter"));
+                } else {
+                    return $this->render('errors/error.html.twig');
+                }
+            }
             $paginate = $pagination->pagination($request, $this->userRepo, 9, "getPaginated", null, "ROLE_STRUCTURE", null, "getTotal");
-            $structures = $paginate['partners'];
+            $structures = $paginate['response'];
             $total = $paginate['total'];
-            $limit = $paginate['limit'];
             $page = $paginate['page'];
 
             if ($this->isGranted('ROLE_ADMIN')) {
@@ -43,12 +54,12 @@ class StructureController extends AbstractController
 
             return $this->render('structure/index.html.twig', compact('structures', 'role', 'total', 'limit', 'page', 'filter'));
         } else {
-            $filter = $request->get('filter');
-            $query = $request->get('query');
-            $paginate = $pagination->pagination($request, $this->userRepo, 9, "getPaginated", $filter, "ROLE_STRUCTURE", $query, "getTotal");
-            $structures = $paginate['partners'];
+            $limit = (int)(htmlentities($request->get("limit")));
+            $filter = htmlentities($request->get("filter"));
+            $query = htmlentities($request->get("query"));
+            $paginate = $pagination->pagination($request, $this->userRepo, $limit, "getPaginated", $filter, "ROLE_STRUCTURE", $query, "getTotal");
+            $structures = $paginate['response'];
             $total = $paginate['total'];
-            $limit = $paginate['limit'];
             $page = $paginate['page'];
 
             if ($this->isGranted('ROLE_ADMIN')) {
@@ -56,7 +67,7 @@ class StructureController extends AbstractController
             } else {
                 $role = "";
             }
-            
+
             return $this->render('structure/_content.html.twig', compact('structures', 'role', 'total', 'limit', 'page'));
         }
     }
@@ -109,17 +120,17 @@ class StructureController extends AbstractController
             $module->setIsActivated(($module->isIsActivated()) ? false : true);
             $this->em->persist($module);
             $this->em->flush();
-    
+
             if ($this->isGranted('ROLE_ADMIN')) {
                 $role = "admin";
             } else {
                 $role = "";
             }
-    
+
             $modulesPartner = $this->userModuleRepository->findModulesByPartner($structure->getPartner());
-    
+
             $modules = $this->userModuleRepository->findModulesByUser($structure->getId());
-    
+
             return $this->render("structure/_modules.html.twig", compact('structure', 'role', 'modules', 'modulesPartner'));
         }
     }
@@ -128,7 +139,7 @@ class StructureController extends AbstractController
     public function activateUser(User $structure, Request $request, SendMailService $mail, PaginationService $pagination): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        
+
         $structure->setIsActivated(($structure->isIsActivated()) ? false : true);
         $this->em->persist($structure);
         $this->em->flush();
@@ -162,12 +173,16 @@ class StructureController extends AbstractController
 
         $this->addFlash('success', 'Email(s) envoyé(s) avec succès');
 
-        $filter = $request->get('filter');
-        $query = $request->get('query');
+        if ($request->get("limit") !== null) {
+            $limit = (int)(htmlentities($request->get("limit")));
+        } else {
+            $limit = 9;
+        }
+        $filter = htmlentities($request->get("filter"));
+        $query = htmlentities($request->get("query"));
         $paginate = $pagination->pagination($request, $this->userRepo, 9, "getPaginated", $filter, "ROLE_STRUCTURE", $query, "getTotal");
-        $structures = $paginate['partners'];
+        $structures = $paginate['response'];
         $total = $paginate['total'];
-        $limit = $paginate['limit'];
         $page = $paginate['page'];
 
         if (isset($_COOKIE['card'])) {
