@@ -21,9 +21,13 @@
 
 <body>
 {% include "_partials/_nav.html.twig" %}
-{% block flash %}{% include "_partials/_flash.html.twig" %}{% endblock %}
 
 <section id="login">
+    {% block flash %}
+    <div class="mt-5">
+        {% include "_partials/_flash.html.twig" %}
+    </div>
+    {% endblock %}
     <div>
         {% if app.user and app.user.isVerified == false and not is_granted('ROLE_ADMIN') %}
             <div class="alert alert-warning alert-dismissible" role="alert">
