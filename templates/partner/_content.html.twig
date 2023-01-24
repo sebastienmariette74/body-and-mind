@@ -5,6 +5,7 @@
     </span>
     <input type="number" name="number" id="limit" class="filters form-control" value="{{ limit }}" min="1" max="11">
 </div> #}
+
 {% for partner in partners %}
 <div class="card col-sm-9 m-3">
     {# <img src="..." class="card-img-top" alt="..."> #}
@@ -44,5 +45,10 @@
 </div>
 
 {% endfor %}
-
+{% if partners is empty %}
+<div>
+    Aucune franchise trouvé.
+</div>
+{% else %}    
 {% include "_partials/_pagination.html.twig" %}
+{% endif %}

@@ -40,4 +40,10 @@
         </div>
     </div>
 {% endfor %}
+{% if structures is empty %}
+<div>
+    Aucune franchise trouvé.
+</div>
+{% else %}    
 {% include "_partials/_pagination.html.twig" %}
+{% endif %}
