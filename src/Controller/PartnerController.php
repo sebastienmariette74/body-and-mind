@@ -230,7 +230,7 @@ class PartnerController extends AbstractController
     }
 
     #[Route('/{slug}/{id}/active-module', name: 'activate_module')]
-    public function activateModule(Module $module, string $slug, string $id, User $user): Response
+    public function activateModule(Module $module, string $slug, string $id): Response
     {
         $partner = $this->userRepository->findUserBySlug($slug);
         $module = $this->userModuleRepository->findModule($slug, $id);
@@ -329,7 +329,7 @@ class PartnerController extends AbstractController
             );
 
             $structureName = $structure->getName();
-            $subject = `Activation du compte de la salle de sport : ${structureName}`;
+            $subject = `Activation du compte de la salle de sport : $structureName`;
             $slug = $structure->getSlug();
             $url = $this->generateUrl('structures_details', ['slug' => $slug], UrlGeneratorInterface::ABSOLUTE_URL);
 
