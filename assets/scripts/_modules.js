@@ -8,7 +8,6 @@ $(".activate-module").css("cursor", "pointer");
 let name, slug, role, moduleId, switchChecked, modulepartner;
 
 $("#modules").on("click", ".activate-module", function (e) {
-  console.log('clic');
   modulepartner = ($(this).data("modulepartner") == "1") ? "activé" : "désactivé" ;
   switchChecked = !$(this).is(":checked");
   e.preventDefault();
