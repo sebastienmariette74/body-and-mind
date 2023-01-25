@@ -13,7 +13,8 @@
         {{ form_row(form.zipcode) }}
         {{ form_row(form.city) }}
         {{ form_row(form.slug) }}
-        <button type="submit" class="btn btn-primary mt-3">Modifier</button>
+        <button type="submit" class="btn btn-warning mt-3">Modifier</button>
+        <a href="{{ path('partners_')}}" class="btn btn-primary mt-3">Annuler</a>
         {{ form_end(form) }}
     </div>
 
