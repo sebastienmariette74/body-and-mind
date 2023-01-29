@@ -16,16 +16,13 @@ function onClickFilter() {
   };
 
   let params = new URLSearchParams();
-
   updateParams(filters, params);
-
   let url = new URL(window.location.href);
   async(url.pathname + "?" + params.toString() + "&ajax=1", "content");
 
   let newParams = new URLSearchParams();
   updateNewParams(filters, newParams);
-
-  // Mise à jour de l'url
+  
   if (newParams.toString() === "") {
     history.pushState({}, null, url.pathname);
   } else {

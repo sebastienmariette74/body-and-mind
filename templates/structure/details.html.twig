@@ -5,12 +5,19 @@
 {% block breadcrumb %}
     {% if not is_granted('ROLE_STRUCTURE') and not is_granted('ROLE_ADMIN') %}
         {% include "_partials/_breadcrumb.html.twig" %}
+        {% endif %}
+        {# <a href=" {{ path('partners_details', {slug: structure.partner.slug}) }}">{{ structure.partner.name }}</a> #}
+        {% if is_granted('ROLE_ADMIN') %}
+        {% include "_partials/_breadcrumb_admin.html.twig" %}
+
     {% endif %}
+    
 {% endblock %}
 
 {% block PageTitle %}<h1 class="my-3">{{ structure.name }}</h1>{% endblock %}
 
 {% block body %}
+
 
     {% if not app.user.isActivated %}
         <div class="alert alert-warning alert-dismissible" role="alert">
