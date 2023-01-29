@@ -75,7 +75,7 @@ class StructureController extends AbstractController
     #[Route('/{slug}', name: 'details')]
     public function show(User $structure, UserInterface $user): Response
     {
-
+        // dd($user->getUserIdentifier(), $user === $structure->getPartner());
         if ($user->getUserIdentifier() === $structure->getEmail() || $user === $structure->getPartner() || $this->isGranted('ROLE_ADMIN')) {
             $structureId = $structure->getId();
             $modules = $this->userModuleRepository->findModulesByUser($structureId);
