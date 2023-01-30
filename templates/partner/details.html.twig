@@ -9,7 +9,7 @@
 {% block PageTitle %}<h1 class="my-3">{{ partner.name }}</h1>{% endblock %}
 
 {% block body %}
-{% if not app.user.isActivated %}
+{% if not app.user.isVerified %}
 <div class="alert alert-warning alert-dismissible" role="alert">
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     <div class="alert-message">
