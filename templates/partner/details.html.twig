@@ -23,7 +23,8 @@
     structure</a>
 {% endif %}
 
-{% if (app.user.isVerified and app.user.isActivated) or is_granted('ROLE_ADMIN') %}
+{% if app.user.isVerified or is_granted('ROLE_ADMIN') %}
+{# {% if (app.user.isVerified and app.user.isActivated) or is_granted('ROLE_ADMIN') %} #}
 
 <div id="cards" class="row justify-content-center content">
     {% include "partner/_cards.html.twig" %}
